@@ -7,14 +7,14 @@ import SummerCollection from "./Summer-Collection";
 
 const Home = () => {
   return (
-    <>
+    <div className="dark:bg-gray-900/95">
       <HeroSection />
       <HotOffers />
       <ShopAccessories />
       <FeaturedCollections />
       <BestSellers />
       <SummerCollection />
-    </>
+    </div>
   );
 };
 

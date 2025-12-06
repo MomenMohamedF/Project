@@ -1,9 +1,10 @@
 import { FaFacebook, FaTwitter } from "react-icons/fa6";
 import { FiInstagram } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-12 md:py-16">
+    <footer className="bg-black text-white py-12 md:py-16 dark:bg-gray-900/95">
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-20">
         {/*  Footer div */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -19,19 +20,19 @@ const Footer = () => {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#D4AF37] transition"
+                className="text-gray-400 hover:text-Yprimary transition"
               >
                 <FiInstagram />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#D4AF37] transition"
+                className="text-gray-400 hover:text-Yprimary transition"
               >
                 <FaFacebook />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-[#D4AF37] transition"
+                className="text-gray-400 hover:text-Yprimary transition"
               >
                 <FaTwitter />
               </a>
@@ -45,22 +46,22 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-gray-400 text-sm md:text-base">
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
-                  Watches
+                <a href="#" className="hover:text-Yprimary transition">
+                  <Link to="/shop/watches">Watches</Link>
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <a href="#" className="hover:text-Yprimary transition">
                   Bags
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <a href="#" className="hover:text-Yprimary transition">
                   Bracelets
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <a href="#" className="hover:text-Yprimary transition">
                   New Arrivals
                 </a>
               </li>

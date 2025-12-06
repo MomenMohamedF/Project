@@ -131,3 +131,11 @@
     @apply bg-background text-foreground;
   }
 }
+@theme {
+  --color-Yprimary: #d4af37;
+  --color-Rprimary: #8f1c33;
+  --color-Gprimary: #16a34a;
+  --color-GrayPrimary: #6b7280;
+  --color-DYprimary: #eab308;
+  --color-PinkPrimary: #a855f7;
+}
