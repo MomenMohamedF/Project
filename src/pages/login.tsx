@@ -2,43 +2,63 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 const Login = () => {
   const [activeTab, setActiveTab] = useState<"login" | "create">("login");
 
-  type Inputs = {
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    phone?: string;
-    password: string;
-    region?: string;
-    agreeToTerms?: boolean;
-  };
+  const schema = z.object({
+    email: z
+      .email({ message: "Please enter a valid email." })
+      .regex(/^[a-zA-Z_0-9]{3,25}@(gmail|yahoo)\.com$/, {
+        message: "Please enter a valid emaail.",
+      }),
+    password: z.string().regex(/^[a-zA-Z_0-9@]{6,20}$/, {
+      message: "Please enter a valid paassword.",
+    }),
+    firstName: z
+      .string()
+      .regex(/^[a-zA-Z_0-9]{1,20}$/, { message: "Please enter a first name." }),
+    lastName: z
+      .string()
+      .regex(/^[a-zA-Z_0-9]{1,20}$/, { message: "Please enter a last name." }),
+    PhoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
+      message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
+    }),
+    region: z.string().min(1, { message: "Please select a region." }),
+    agreeToTerms: z.boolean().refine((value) => value === true, {
+      message: "Please agree to the terms and conditions.",
+    }),
+  });
+
+  type LoginForm = z.infer<typeof schema>;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Inputs>({
+  } = useForm<LoginForm>({
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
       firstName: "",
       lastName: "",
-      phone: "",
+      PhoneNumber: "",
       region: "",
       agreeToTerms: false,
     },
   });
 
-  const onSubmit = (data: Inputs) => {
+  const onSubmit = (data: LoginForm) => {
     if (activeTab === "login") {
       console.log("Login:", { email: data.email, password: data.password });
     } else {
       console.log("Create Account:", data);
     }
-    // reset(); // uncomment to clear form after submit
+    reset();
   };
 
   return (
@@ -113,20 +133,16 @@ const Login = () => {
                     className="input"
                     {...register("email", {
                       required: "Email is required",
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Invalid email address",
-                      },
                     })}
                   />
                   {errors.email && (
-                    <p className="text-sm text-red-500 mt-1">
+                    <p className="text-lg text-red-500 font-bold mt-1">
                       {errors.email.message}
                     </p>
                   )}
                 </div>
 
-                {/* Password Input */}
+                {/* PasswordInput */}
                 <div>
                   <input
                     type="password"
@@ -134,17 +150,16 @@ const Login = () => {
                     className="input"
                     {...register("password", {
                       required: "Password is required",
-                      minLength: { value: 6, message: "Minimum 6 characters" },
                     })}
                   />
                   {errors.password && (
-                    <p className="text-sm text-red-500 mt-1">
+                    <p className="text-lg text-red-500 font-bold mt-1">
                       {errors.password.message}
                     </p>
                   )}
                 </div>
 
-                {/* Forgot Password */}
+                {/* ForgotPassword */}
                 <div className="text-right">
                   <a
                     href="#"
@@ -154,7 +169,7 @@ const Login = () => {
                   </a>
                 </div>
 
-                {/* Login Button */}
+                {/* LoginButton */}
                 <button
                   type="submit"
                   className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
@@ -164,7 +179,7 @@ const Login = () => {
               </>
             ) : (
               <>
-                {/* First Name & Last Name */}
+                {/* FirstName & LastName */}
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     type="text"
@@ -174,6 +189,11 @@ const Login = () => {
                       required: "First name is required",
                     })}
                   />
+                  {errors.firstName && (
+                    <p className="text-lg text-red-500 font-bold mt-1">
+                      {errors.firstName.message}
+                    </p>
+                  )}
                   <input
                     type="text"
                     placeholder="Last Name"
@@ -182,6 +202,11 @@ const Login = () => {
                       required: "Last name is required",
                     })}
                   />
+                  {errors.lastName && (
+                    <p className="text-lg text-red-500 font-bold mt-1">
+                      {errors.lastName.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email Input */}
@@ -192,14 +217,10 @@ const Login = () => {
                     className="input"
                     {...register("email", {
                       required: "Email is required",
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Invalid email address",
-                      },
                     })}
                   />
                   {errors.email && (
-                    <p className="text-sm text-red-500 mt-1">
+                    <p className="text-lg text-red-500 font-bold mt-1">
                       {errors.email.message}
                     </p>
                   )}
@@ -208,17 +229,16 @@ const Login = () => {
                 {/* Phone Input */}
                 <div>
                   <input
-                    type="tel"
+                    type="text"
                     placeholder="Phone Number"
                     className="input"
-                    {...register("phone", {
+                    {...register("PhoneNumber", {
                       required: "Phone is required",
-                      minLength: { value: 7, message: "Enter a valid phone" },
                     })}
                   />
-                  {errors.phone && (
-                    <p className="text-sm text-red-500 mt-1">
-                      {errors.phone.message}
+                  {errors.PhoneNumber && (
+                    <p className="text-lg text-red-500 font-bold mt-1">
+                      {errors.PhoneNumber.message}
                     </p>
                   )}
                 </div>
@@ -231,11 +251,10 @@ const Login = () => {
                     className="input"
                     {...register("password", {
                       required: "Password is required",
-                      minLength: { value: 6, message: "Minimum 6 characters" },
                     })}
                   />
                   {errors.password && (
-                    <p className="text-sm text-red-500 mt-1">
+                    <p className="text-lg text-red-500 font-bold mt-1">
                       {errors.password.message}
                     </p>
                   )}
@@ -267,7 +286,7 @@ const Login = () => {
                   </span>
                 </div>
                 {errors.agreeToTerms && (
-                  <p className="text-sm text-red-500">
+                  <p className="text-lg text-red-500 font-bold">
                     {errors.agreeToTerms.message}
                   </p>
                 )}
