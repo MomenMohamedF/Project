@@ -14,7 +14,7 @@ const Login = () => {
       .regex(/^[a-zA-Z_0-9]{3,25}@(gmail|yahoo)\.com$/, {
         message: "Please enter a valid emaail.",
       }),
-    password: z.string().regex(/^[a-zA-Z_0-9@]{6,20}$/, {
+    password: z.string().regex(/^[a-zA-Z_0-9@$#%!&*]{6,20}$/, {
       message: "Please enter a valid paassword.",
     }),
     firstName: z
