@@ -139,3 +139,11 @@
   --color-DYprimary: #eab308;
   --color-PinkPrimary: #a855f7;
 }
+@layer components {
+  .input {
+    @apply w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-Yprimary dark:text-white;
+  }
+  .input-name {
+    @apply px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-Yprimary dark:text-white;
+  }
+}

@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { MdDarkMode } from "react-icons/md";
 const DarkMode = () => {
   const [mode, setMode] = useState(false);
+  let modee = "Dark";
   useEffect(() => {
     if (mode) {
       document.documentElement.classList.add("dark");
@@ -10,9 +11,14 @@ const DarkMode = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [mode]);
+  if (mode) {
+    modee = "Light";
+  } else {
+    modee = "Dark";
+  }
   return (
     <Button onClick={() => setMode(!mode)}>
-      Dark-mode
+      {modee}-mode
       <MdDarkMode />
     </Button>
   );

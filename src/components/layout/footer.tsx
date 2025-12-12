@@ -46,24 +46,36 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-gray-400 text-sm md:text-base">
               <li>
-                <a href="#" className="hover:text-Yprimary transition">
-                  <Link to="/shop/watches">Watches</Link>
-                </a>
+                <Link
+                  to="/shop/watches"
+                  className="hover:text-Yprimary transition"
+                >
+                  Watches
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-Yprimary transition">
+                <Link
+                  to="/shop/bags"
+                  className="hover:text-Yprimary transition"
+                >
                   Bags
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-Yprimary transition">
+                <Link
+                  to="/shop/bracelets"
+                  className="hover:text-Yprimary transition"
+                >
                   Bracelets
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-Yprimary transition">
+                <Link
+                  to="/shop/new-arrivals"
+                  className="hover:text-Yprimary transition"
+                >
                   New Arrivals
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -75,24 +87,33 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3 text-gray-400 text-sm md:text-base">
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <Link to="/contact" className="hover:text-[#D4AF37] transition">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <Link
+                  to="/support/size-guide"
+                  className="hover:text-[#D4AF37] transition"
+                >
                   Size Guide
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <Link
+                  to="/support/returns"
+                  className="hover:text-[#D4AF37] transition"
+                >
                   Returns
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-[#D4AF37] transition">
+                <Link
+                  to="/support/shipping"
+                  className="hover:text-[#D4AF37] transition"
+                >
                   Shipping
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

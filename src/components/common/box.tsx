@@ -13,12 +13,14 @@ const Box = () => {
   const [selected, setSelected] = React.useState<string | null>("watches");
 
   return (
-    <div className="w-full max-w-xs border border-gray-200 rounded-lg p-6 bg-white m-8">
-      <h3 className="text-lg font-bold text-black mb-6">Category</h3>
+    <div className="w-full border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
+      <h3 className="text-lg font-bold text-black mb-6  dark:text-white/56">
+        Category
+      </h3>
       <div className="flex flex-col gap-4">
         {categories.map((category) => (
-          <div key={category.id} className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div key={category.id} className="flex items-center justify-between ">
+            <div className="flex items-center gap-3 ">
               <Checkbox
                 id={category.id}
                 checked={selected === category.id}
@@ -30,7 +32,7 @@ const Box = () => {
               />
               <Label
                 htmlFor={category.id}
-                className="text-base text-gray-700 font-medium cursor-pointer"
+                className="text-base text-gray-700 font-medium cursor-pointer dark:text-white/56"
               >
                 {category.label}
               </Label>

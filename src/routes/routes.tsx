@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
 import Contact from "../pages/Contact";
+import Login from "@/pages/login";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <Contact />
+          </Suspense>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Login />
           </Suspense>
         ),
       },
