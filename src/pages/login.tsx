@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { data } from "react-router-dom";
+import { api } from "@/lib/utils/api";
 
 const Login = () => {
   const [activeTab, setActiveTab] = useState<"login" | "create">("login");
@@ -52,13 +54,16 @@ const Login = () => {
     },
   });
 
-  const onSubmit = (data: LoginForm) => {
-    if (activeTab === "login") {
-      console.log("Login:", { email: data.email, password: data.password });
-    } else {
-      console.log("Create Account:", data);
-    }
-    reset();
+  // const onSubmit = (data: LoginForm) => {
+  //   if (activeTab === "login") {
+  //     console.log("Login:", { email: data.email, password: data.password });
+  //   } else {
+  //     console.log("Create Account:", data);
+  //   }
+  //   reset();
+  // };
+  const onSubmit: SubmitHandler<LoginForm> = (data) => {
+    api.post("auth/sign-in", data).then((res) => console.log(res.data));
   };
 
   return (
