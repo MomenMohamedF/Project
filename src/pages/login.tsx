@@ -22,6 +22,7 @@ const Login = () => {
       navigate("/");
       if (activeTab === "login") {
         localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data.user));
       }
       toast.success(
         activeTab === "login" ? "Login successful!" : "Account created!"
@@ -49,7 +50,7 @@ const Login = () => {
   const createSchema = loginSchema.extend({
     firstName: z.string().min(1, { message: "Please enter a first name." }),
     lastName: z.string().min(1, { message: "Please enter a last name." }),
-    PhoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
+    phoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
       message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
     }),
     region: z.string().min(1, { message: "Please select a region." }),
@@ -74,7 +75,7 @@ const Login = () => {
       password: "",
       firstName: "",
       lastName: "",
-      PhoneNumber: "",
+      phoneNumber: "",
       region: "",
       agreeToTerms: false,
     },
@@ -262,13 +263,13 @@ const Login = () => {
                       type="text"
                       placeholder="Phone Number"
                       className="input"
-                      {...register("PhoneNumber", {
+                      {...register("phoneNumber", {
                         required: "Phone is required",
                       })}
                     />
-                    {errors.PhoneNumber && (
+                    {errors.phoneNumber && (
                       <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.PhoneNumber.message}
+                        {errors.phoneNumber.message}
                       </p>
                     )}
                   </div>

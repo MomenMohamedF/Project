@@ -4,7 +4,6 @@ import HeroSection from "./first-part";
 import HotOffers from "./hot-offers";
 import ShopAccessories from "./Shop-Accessories";
 import SummerCollection from "./Summer-Collection";
-
 import useProducts from "@/hooks/products/useProducts";
 
 const Home = () => {
@@ -29,5 +28,6 @@ const Home = () => {
     </>
   );
 };
+
 
 export default Home;

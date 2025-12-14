@@ -5,6 +5,8 @@ import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
 import Contact from "../pages/Contact";
 import Login from "@/pages/login";
+import ProdectRoute from "@/components/common/prodectRoute";
+import NotFound from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -47,9 +49,11 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: (
+          <ProdectRoute auth>
           <Suspense fallback={<div>Loading...</div>}>
             <Login />
           </Suspense>
+          </ProdectRoute>
         ),
       },
     ],
@@ -57,8 +61,18 @@ export const router = createBrowserRouter([
   {
     path: "/Dashboard",
     element: (
+      <ProdectRoute>
       <Suspense fallback={<div>Loading...</div>}>
         <Dashboard />
+      </Suspense>
+      </ProdectRoute>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <NotFound />
       </Suspense>
     ),
   },
