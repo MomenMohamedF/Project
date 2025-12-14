@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
@@ -56,7 +57,11 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    api.post("auth/sign-in", data).then((res) => console.log(res.data));
+    api.post("auth/sign-in", data).then((res) => {
+      console.log(res.data);
+      toast.success("Login successful!");
+    });
+    
   };
 
   return (
