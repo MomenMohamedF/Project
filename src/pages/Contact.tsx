@@ -1,5 +1,12 @@
+import Tap from "@/components/common/tap";
+
 const Contact = () => {
-  return <div>Contact</div>;
+  return (
+    <div>
+      <Tap pageName="Contact" />
+      Contact
+    </div>
+  );
 };
 
 export default Contact;
