@@ -144,7 +144,7 @@ const About = () => {
       </div>
 
       {/*Section4*/}
-      <div className="bg-background py-16 ">
+      <div className="bg-background py-16 dark:bg-gray-900/95">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-yellow-600">Why Choose Us</h2>

@@ -1,32 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsFacebook } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { api } from "@/lib/utils/api";
 import Tap from "@/components/common/tap";
+import {  useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+
 
 const Login = () => {
+  const navigate = useNavigate();
+   const { mutate, isPending } = useMutation({
+    mutationFn: (formData: any) => {
+      const endpoint = activeTab === "login" ? "auth/sign-in" : "auth/sign-up";
+      return api.post(endpoint, formData);
+    },
+    onSuccess: (data) => {
+      navigate("/");
+      if (activeTab === "login") {
+        localStorage.setItem("token", data.data.token);
+      }
+      toast.success(
+        activeTab === "login" ? "Login successful!" : "Account created!"
+      );
+      console.log(data);
+    },
+    onError: (error) => {
+      const message = error instanceof Error ? error.message : "An error occurred";
+      toast.error(message);
+      console.log(message);
+    },
+  });
   const [activeTab, setActiveTab] = useState<"login" | "create">("login");
 
-  const schema = z.object({
-    email: z
-      .email({ message: "Please enter a valid email." })
-      .regex(/^[a-zA-Z_0-9]{3,25}@(gmail|yahoo)\.com$/, {
-        message: "Please enter a valid emaail.",
+  const loginSchema = z.object({
+    email: z.string().email({ message: "Please enter a valid email address (e.g. user@example.com)." }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters." })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, {
+        message: "Password must contain uppercase, lowercase, number, and special character.",
       }),
-    password: z.string().regex(/^[a-zA-Z_0-9@$#%!&*]{6,20}$/, {
-      message: "Please enter a valid paassword.",
-    }),
-    firstName: z
-      .string()
-      .regex(/^[a-zA-Z_0-9]{1,20}$/, { message: "Please enter a first name." }),
-    lastName: z
-      .string()
-      .regex(/^[a-zA-Z_0-9]{1,20}$/, { message: "Please enter a last name." }),
+  });
+
+  const createSchema = loginSchema.extend({
+    firstName: z.string().min(1, { message: "Please enter a first name." }),
+    lastName: z.string().min(1, { message: "Please enter a last name." }),
     PhoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
       message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
     }),
@@ -36,7 +58,9 @@ const Login = () => {
     }),
   });
 
-  type LoginForm = z.infer<typeof schema>;
+  const schema = activeTab === "login" ? loginSchema : createSchema;
+
+  type LoginForm = z.infer<typeof createSchema>;
 
   const {
     register,
@@ -44,7 +68,7 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm<LoginForm>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       email: "",
       password: "",
@@ -56,12 +80,12 @@ const Login = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    api.post("auth/sign-in", data).then((res) => {
-      console.log(res.data);
-      toast.success("Login successful!");
-    });
-    
+  useEffect(() => {
+    reset();
+  }, [activeTab, reset]);
+
+  const onSubmit: SubmitHandler<LoginForm> = (formData) => {
+    mutate(formData);
   };
 
   return (
@@ -93,7 +117,7 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Right Section - Login Form */}
+        {/* Right Section */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12">
           <div className="w-full max-w-md">
             <div className="mb-8">
@@ -177,9 +201,10 @@ const Login = () => {
                   {/* LoginButton */}
                   <button
                     type="submit"
+                    disabled={isPending}
                     className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
                   >
-                    Login
+                    {isPending ? "Logging in..." : "Login"}
                   </button>
                 </>
               ) : (
@@ -298,6 +323,7 @@ const Login = () => {
 
                   {/* Create Account Button */}
                   <button
+                    disabled={isPending}
                     type="submit"
                     className="w-full bg-Yprimary  text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
                   >
