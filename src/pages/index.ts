@@ -5,4 +5,6 @@ const About = lazy(() => import("./About"));
 const Shop = lazy(() => import("./Shop/Shop"));
 const Dashboard = lazy(() => import("./Dashboard"));
 const Login = lazy(() => import("./login"));
-export { Home, About, Shop, Dashboard, Login };
+const Contact = lazy(() => import("./Contact"));
+
+export { Home, About, Shop, Dashboard, Login, Contact };

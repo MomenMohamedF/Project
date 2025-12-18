@@ -11,8 +11,8 @@ const Shop = () => {
   const { category } = useParams() as { category: string };
   const [sortBy, setSortBy] = useState("newest");
 
-  const displayCategory = category 
-    ? category.charAt(0).toUpperCase() + category.slice(1) 
+  const displayCategory = category
+    ? category.charAt(0).toUpperCase() + category.slice(1)
     : "Products";
 
   return (
@@ -69,7 +69,7 @@ const Shop = () => {
           </div>
         </aside>
 
-        {/* Main Content */}
+        {/* Right bar */}
         <div className="flex-1">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -101,7 +101,7 @@ const Shop = () => {
             <Card2 />
           </ErrorBoundry>
 
-          {/* Pagination */}
+          {/* pagination */}
           <div className="mt-16 flex justify-center">
             <ErrorBoundry>
               <Pagni />

@@ -149,7 +149,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-slate-100 dark:bg-gray-900/95">
-      {/* Sidebar */}
+      {/* left section */}
       <aside className="w-64 bg-[#C4A029] text-white flex flex-col dark:bg-gray-900/95">
         <div className="h-16 flex items-center px-6 border-b ">
           <h1 className="text-2xl font-bold">Auréne Dashboard</h1>
@@ -197,9 +197,8 @@ const Dashboard = () => {
         </nav>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 px-8 py-6">
-        {/* Top bar */}
+        {/* header */}
         <header className="flex items-center justify-between mb-6 ">
           <div>
             <h1 className="text-xl font-semibold text-slate-900 dark:text-white/90">
@@ -229,7 +228,7 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Overview content */}
+        {/* Overview */}
         {activeMenu === "overview" && (
           <>
             {/* Stats cards */}
@@ -318,7 +317,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Recent activity */}
+              {/* activity now */}
               <div className="bg-white rounded-xl shadow-sm p-5 dark:bg-gray-900/95">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-sm font-semibold text-slate-900  dark:text-white/90">
