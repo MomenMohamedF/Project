@@ -16,7 +16,7 @@ const Header = () => {
             Home
           </NavLink>
           <NavLink
-            to="/shop/watches"
+            to="/shop"
             className={({ isActive }) => (isActive ? "text-Yprimary" : "")}
           >
             Shop

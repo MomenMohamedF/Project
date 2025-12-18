@@ -11,11 +11,15 @@ const Shop = () => {
   const { category } = useParams() as { category: string };
   const [sortBy, setSortBy] = useState("newest");
 
+  const displayCategory = category 
+    ? category.charAt(0).toUpperCase() + category.slice(1) 
+    : "Products";
+
   return (
     <div className="dark:bg-gray-900/95">
-      <Tap pageName={category} />
+      <Tap pageName={displayCategory} />
       <div className="flex gap-6 px-4 md:px-8 lg:px-20 py-8 flex-col md:flex-row">
-        {/* Sidebar */}
+        {/* left bar */}
         <aside className="hidden md:block md:w-64 lg:w-72 shrink-0 space-y-6 ">
           <ErrorBoundry>
             <Box />
@@ -70,10 +74,10 @@ const Shop = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-black mb-1 dark:text-white/56">
-                {category || "Products"}
+                {displayCategory}
               </h1>
               <p className="text-gray-600 dark:text-white/56">
-                24 products found
+                {category.length} products found
               </p>
             </div>
             <div className="flex items-center gap-2 dark:bg-gray-900/95">

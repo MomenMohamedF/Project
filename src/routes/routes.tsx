@@ -8,6 +8,7 @@ import Login from "@/pages/login";
 import ProdectRoute from "@/components/common/prodectRoute";
 import NotFound from "@/pages/NotFound";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
+import MainShop from "@/pages/Shop/mainShop";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,16 @@ export const router = createBrowserRouter([
           <Suspense fallback={<div>Loading...</div>}>
             <Home />
           </Suspense>
+          </ErrorBoundry>
+        ),
+      },
+      {
+        path: "shop",
+        element: (
+          <ErrorBoundry>
+            <Suspense fallback={<div>Loading...</div>}>
+              <MainShop />
+            </Suspense>
           </ErrorBoundry>
         ),
       },

@@ -1,16 +1,17 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Box = () => {
-  const categories = [
-    { id: "watches", label: "Watches", count: 24 },
-    { id: "bags", label: "Bags", count: 18 },
-    { id: "bracelets", label: "Bracelets", count: 12 },
-    { id: "rings", label: "Rings", count: 18 },
-  ];
+  const navigate = useNavigate();
+  const { category: currentCategory } = useParams<{ category: string }>();
 
-  const [selected, setSelected] = React.useState<string | null>("watches");
+  const categories = [
+    { id: "watches", label: "Watches", count: 9 },
+    { id: "bags", label: "Bags", count: 12 },
+    { id: "bracelets", label: "Bracelets", count: 6 },
+    { id: "rings", label: "Rings", count: 9 },
+  ];
 
   return (
     <div className="w-full border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
@@ -23,10 +24,11 @@ const Box = () => {
             <div className="flex items-center gap-3 ">
               <Checkbox
                 id={category.id}
-                checked={selected === category.id}
+                checked={currentCategory === category.id}
                 onCheckedChange={(val) => {
-                  const isChecked = Boolean(val);
-                  setSelected(isChecked ? category.id : null);
+                  if (val) {
+                    navigate(`/shop/${category.id}`);
+                  }
                 }}
                 className="w-5 h-5"
               />

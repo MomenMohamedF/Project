@@ -1,9 +1,10 @@
 import { CiHeart } from "react-icons/ci";
 import { FaStar } from "react-icons/fa6";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Card2 = () => {
-  const [activeCategory, setActiveCategory] = useState("watches");
+  const { category } = useParams<{ category: string }>();
+  const activeCategory = category || "watches";
 
   const WatchesProducts = [
     {
@@ -261,48 +262,6 @@ const Card2 = () => {
 
   return (
     <div>
-      <div className="flex justify-center gap-4 mb-8">
-        <button
-          onClick={() => setActiveCategory("watches")}
-          className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-            activeCategory === "watches"
-              ? "bg-black text-white"
-              : "bg-gray-200 text-black"
-          }`}
-        >
-          Watches
-        </button>
-        <button
-          onClick={() => setActiveCategory("bags")}
-          className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-            activeCategory === "bags"
-              ? "bg-black text-white"
-              : "bg-gray-200 text-black"
-          }`}
-        >
-          Bags
-        </button>
-        <button
-          onClick={() => setActiveCategory("rings")}
-          className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-            activeCategory === "rings"
-              ? "bg-black text-white"
-              : "bg-gray-200 text-black"
-          }`}
-        >
-          Rings
-        </button>
-        <button
-          onClick={() => setActiveCategory("bracelets")}
-          className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-            activeCategory === "bracelets"
-              ? "bg-black text-white"
-              : "bg-gray-200 text-black"
-          }`}
-        >
-          Bracelets
-        </button>
-      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         {productsToDisplay().map((product) => (
           <div
