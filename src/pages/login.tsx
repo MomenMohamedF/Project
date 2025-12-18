@@ -9,6 +9,7 @@ import { api } from "@/lib/utils/api";
 import Tap from "@/components/common/tap";
 import {  useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import ErrorBoundry from "@/components/common/ErrorBoundry";
 
 
 const Login = () => {
@@ -120,7 +121,8 @@ const Login = () => {
 
         {/* Right Section */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12">
-          <div className="w-full max-w-md">
+          <ErrorBoundry>
+            <div className="w-full max-w-md">
             <div className="mb-8">
               <h1 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
                 Hello, Creative Mind!"
@@ -357,6 +359,7 @@ const Login = () => {
               </button>
             </div>
           </div>
+          </ErrorBoundry>
         </div>
       </div>
     </>

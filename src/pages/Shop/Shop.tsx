@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Pagni from "@/components/common/pagni";
 import Card2 from "@/components/cards/card2";
+import ErrorBoundry from "@/components/common/ErrorBoundry";
 
 const Shop = () => {
   const { category } = useParams() as { category: string };
@@ -16,9 +17,13 @@ const Shop = () => {
       <div className="flex gap-6 px-4 md:px-8 lg:px-20 py-8 flex-col md:flex-row">
         {/* Sidebar */}
         <aside className="hidden md:block md:w-64 lg:w-72 shrink-0 space-y-6 ">
-          <Box />
+          <ErrorBoundry>
+            <Box />
+          </ErrorBoundry>
 
-          <Slide className="w-full" />
+          <ErrorBoundry>
+            <Slide className="w-full" />
+          </ErrorBoundry>
 
           {/* Color Filter */}
           <div className="border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
@@ -61,7 +66,7 @@ const Shop = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1">
+        <div className="flex-1">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-black mb-1 dark:text-white/56">
@@ -88,15 +93,17 @@ const Shop = () => {
             </div>
           </div>
 
-          {/* Products Grid */}
-
-          <Card2 />
+          <ErrorBoundry>
+            <Card2 />
+          </ErrorBoundry>
 
           {/* Pagination */}
           <div className="mt-16 flex justify-center">
-            <Pagni />
+            <ErrorBoundry>
+              <Pagni />
+            </ErrorBoundry>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
