@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import BestSellers from "./Best-Sellers";
 import FeaturedCollections from "./Featured-Collections";
 import HeroSection from "./first-part";
@@ -9,7 +10,9 @@ import ErrorBoundry from "@/components/common/ErrorBoundry";
 
 const Home = () => {
   // const { data, isPending, error } = useProducts();
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {/* {isPending && <p>Loading...</p>}

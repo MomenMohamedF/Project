@@ -2,7 +2,7 @@ import Tap from "@/components/common/tap";
 import Box from "@/components/common/box";
 import Slide from "@/components/common/slide";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagni from "@/components/common/pagni";
 import Card2 from "@/components/cards/card2";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
@@ -15,6 +15,9 @@ const Shop = () => {
     ? category.charAt(0).toUpperCase() + category.slice(1)
     : "Products";
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="dark:bg-gray-900/95">
       <Tap pageName={displayCategory} />

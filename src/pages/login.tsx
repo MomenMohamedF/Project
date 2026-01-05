@@ -7,14 +7,13 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/lib/utils/api";
 import Tap from "@/components/common/tap";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
 
-
 const Login = () => {
   const navigate = useNavigate();
-   const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (formData: any) => {
       const endpoint = activeTab === "login" ? "auth/sign-in" : "auth/sign-up";
       return api.post(endpoint, formData);
@@ -31,7 +30,8 @@ const Login = () => {
       console.log(data);
     },
     onError: (error) => {
-      const message = error instanceof Error ? error.message : "An error occurred";
+      const message =
+        error instanceof Error ? error.message : "An error occurred";
       toast.error(message);
       console.log(message);
     },
@@ -39,13 +39,21 @@ const Login = () => {
   const [activeTab, setActiveTab] = useState<"login" | "create">("login");
 
   const loginSchema = z.object({
-    email: z.string().email({ message: "Please enter a valid email address (e.g. user@example.com)." }),
+    email: z
+      .string()
+      .email({
+        message: "Please enter a valid email address (e.g. user@example.com).",
+      }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters." })
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, {
-        message: "Password must contain uppercase, lowercase, number, and special character.",
-      }),
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        {
+          message:
+            "Password must contain uppercase, lowercase, number, and special character.",
+        }
+      ),
   });
 
   const createSchema = loginSchema.extend({
@@ -89,6 +97,9 @@ const Login = () => {
   const onSubmit: SubmitHandler<LoginForm> = (formData) => {
     mutate(formData);
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -123,242 +134,242 @@ const Login = () => {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12">
           <ErrorBoundry>
             <div className="w-full max-w-md">
-            <div className="mb-8">
-              <h1 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-                Hello, Creative Mind!"
-              </h1>
-            </div>
+              <div className="mb-8">
+                <h1 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
+                  Hello, Creative Mind!"
+                </h1>
+              </div>
 
-            {/* Tabs */}
-            <div className="flex gap-6 mb-8 border-b border-gray-200 dark:border-gray-700">
-              <button
-                onClick={() => setActiveTab("login")}
-                className={`pb-3 text-sm font-semibold transition-colors ${
-                  activeTab === "login"
-                    ? "text-Yprimary border-b-2 border-Yprimary"
-                    : "text-gray-600 dark:text-gray-400"
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => setActiveTab("create")}
-                className={`pb-3 text-sm font-semibold transition-colors ${
-                  activeTab === "create"
-                    ? "text-Yprimary border-b-2 border-Yprimary"
-                    : "text-gray-600 dark:text-gray-400"
-                }`}
-              >
-                Create Account
-              </button>
-            </div>
+              {/* Tabs */}
+              <div className="flex gap-6 mb-8 border-b border-gray-200 dark:border-gray-700">
+                <button
+                  onClick={() => setActiveTab("login")}
+                  className={`pb-3 text-sm font-semibold transition-colors ${
+                    activeTab === "login"
+                      ? "text-Yprimary border-b-2 border-Yprimary"
+                      : "text-gray-600 dark:text-gray-400"
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setActiveTab("create")}
+                  className={`pb-3 text-sm font-semibold transition-colors ${
+                    activeTab === "create"
+                      ? "text-Yprimary border-b-2 border-Yprimary"
+                      : "text-gray-600 dark:text-gray-400"
+                  }`}
+                >
+                  Create Account
+                </button>
+              </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              {activeTab === "login" ? (
-                <>
-                  {/* Email Input */}
-                  <div>
-                    <input
-                      type="email"
-                      placeholder="Email or Username"
-                      className="input"
-                      {...register("email", {
-                        required: "Email is required",
-                      })}
-                    />
-                    {errors.email && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
+              {/* Form */}
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {activeTab === "login" ? (
+                  <>
+                    {/* Email Input */}
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email or Username"
+                        className="input"
+                        {...register("email", {
+                          required: "Email is required",
+                        })}
+                      />
+                      {errors.email && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
 
-                  {/* PasswordInput */}
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      className="input"
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                    />
-                    {errors.password && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.password.message}
-                      </p>
-                    )}
-                  </div>
+                    {/* PasswordInput */}
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        className="input"
+                        {...register("password", {
+                          required: "Password is required",
+                        })}
+                      />
+                      {errors.password && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.password.message}
+                        </p>
+                      )}
+                    </div>
 
-                  {/* ForgotPassword */}
-                  <div className="text-right">
-                    <a
-                      href="#"
-                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-Yprimary"
+                    {/* ForgotPassword */}
+                    <div className="text-right">
+                      <a
+                        href="#"
+                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-Yprimary"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
+
+                    {/* LoginButton */}
+                    <button
+                      type="submit"
+                      disabled={isPending}
+                      className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
                     >
-                      Forgot password?
-                    </a>
-                  </div>
+                      {isPending ? "Logging in..." : "Login"}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* FirstName & LastName */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        placeholder="First Name"
+                        className="input-name"
+                        {...register("firstName", {
+                          required: "First name is required",
+                        })}
+                      />
+                      {errors.firstName && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.firstName.message}
+                        </p>
+                      )}
+                      <input
+                        type="text"
+                        placeholder="Last Name"
+                        className="input-name"
+                        {...register("lastName", {
+                          required: "Last name is required",
+                        })}
+                      />
+                      {errors.lastName && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.lastName.message}
+                        </p>
+                      )}
+                    </div>
 
-                  {/* LoginButton */}
-                  <button
-                    type="submit"
-                    disabled={isPending}
-                    className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
-                  >
-                    {isPending ? "Logging in..." : "Login"}
-                  </button>
-                </>
-              ) : (
-                <>
-                  {/* FirstName & LastName */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      placeholder="First Name"
-                      className="input-name"
-                      {...register("firstName", {
-                        required: "First name is required",
-                      })}
-                    />
-                    {errors.firstName && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.firstName.message}
+                    {/* Email Input */}
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email or Username"
+                        className="input"
+                        {...register("email", {
+                          required: "Email is required",
+                        })}
+                      />
+                      {errors.email && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.email.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Phone Input */}
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Phone Number"
+                        className="input"
+                        {...register("phoneNumber", {
+                          required: "Phone is required",
+                        })}
+                      />
+                      {errors.phoneNumber && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.phoneNumber.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Password Input */}
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="Password"
+                        className="input"
+                        {...register("password", {
+                          required: "Password is required",
+                        })}
+                      />
+                      {errors.password && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.password.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Region Select */}
+                    <div>
+                      <select className="input" {...register("region")}>
+                        <option value="">Select your region</option>
+                        <option value="north">Egypt</option>
+                        <option value="south">USA</option>
+                        <option value="east">England</option>
+                        <option value="west">Spain</option>
+                        <option value="center">France</option>
+                      </select>
+                    </div>
+
+                    {/* Terms Checkbox */}
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 rounded border border-gray-300 dark:border-gray-600"
+                        {...register("agreeToTerms", {
+                          required: "You must accept terms",
+                        })}
+                      />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        I agree to the Terms of Service and Privacy Policy
+                      </span>
+                    </div>
+                    {errors.agreeToTerms && (
+                      <p className="text-lg text-red-500 font-bold">
+                        {errors.agreeToTerms.message}
                       </p>
                     )}
-                    <input
-                      type="text"
-                      placeholder="Last Name"
-                      className="input-name"
-                      {...register("lastName", {
-                        required: "Last name is required",
-                      })}
-                    />
-                    {errors.lastName && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.lastName.message}
-                      </p>
-                    )}
-                  </div>
 
-                  {/* Email Input */}
-                  <div>
-                    <input
-                      type="email"
-                      placeholder="Email or Username"
-                      className="input"
-                      {...register("email", {
-                        required: "Email is required",
-                      })}
-                    />
-                    {errors.email && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
+                    {/* Create Account Button */}
+                    <button
+                      disabled={isPending}
+                      type="submit"
+                      className="w-full bg-Yprimary  text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
+                    >
+                      Create Account
+                    </button>
+                  </>
+                )}
+              </form>
 
-                  {/* Phone Input */}
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Phone Number"
-                      className="input"
-                      {...register("phoneNumber", {
-                        required: "Phone is required",
-                      })}
-                    />
-                    {errors.phoneNumber && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.phoneNumber.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Password Input */}
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      className="input"
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                    />
-                    {errors.password && (
-                      <p className="text-lg text-red-500 font-bold mt-1">
-                        {errors.password.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Region Select */}
-                  <div>
-                    <select className="input" {...register("region")}>
-                      <option value="">Select your region</option>
-                      <option value="north">Egypt</option>
-                      <option value="south">USA</option>
-                      <option value="east">England</option>
-                      <option value="west">Spain</option>
-                      <option value="center">France</option>
-                    </select>
-                  </div>
-
-                  {/* Terms Checkbox */}
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 rounded border border-gray-300 dark:border-gray-600"
-                      {...register("agreeToTerms", {
-                        required: "You must accept terms",
-                      })}
-                    />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      I agree to the Terms of Service and Privacy Policy
-                    </span>
-                  </div>
-                  {errors.agreeToTerms && (
-                    <p className="text-lg text-red-500 font-bold">
-                      {errors.agreeToTerms.message}
-                    </p>
-                  )}
-
-                  {/* Create Account Button */}
-                  <button
-                    disabled={isPending}
-                    type="submit"
-                    className="w-full bg-Yprimary  text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
-                  >
-                    Create Account
-                  </button>
-                </>
-              )}
-            </form>
-
-            {/* line */}
-            <div className="flex items-center gap-3 my-6">
-              <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Or
-              </span>
-              <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
-            </div>
-
-            {/* Buttons */}
-            <div className="flex gap-3 ">
-              <button className="flex-1 flex items-center bg-gradient-to-r from-red-500 to-yellow-400 justify-center gap-2 border border-gray-300 dark:border-gray-600 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <FcGoogle />
-                <span className="text-sm font-medium  text-gray-700 dark:text-gray-300">
-                  Google
+              {/* line */}
+              <div className="flex items-center gap-3 my-6">
+                <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Or
                 </span>
-              </button>
-              <button className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-400 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                <BsFacebook />
-                <span className="text-sm font-medium">Facebook</span>
-              </button>
+                <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex gap-3 ">
+                <button className="flex-1 flex items-center bg-gradient-to-r from-red-500 to-yellow-400 justify-center gap-2 border border-gray-300 dark:border-gray-600 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <FcGoogle />
+                  <span className="text-sm font-medium  text-gray-700 dark:text-gray-300">
+                    Google
+                  </span>
+                </button>
+                <button className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-400 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                  <BsFacebook />
+                  <span className="text-sm font-medium">Facebook</span>
+                </button>
+              </div>
             </div>
-          </div>
           </ErrorBoundry>
         </div>
       </div>

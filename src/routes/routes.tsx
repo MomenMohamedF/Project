@@ -5,14 +5,13 @@ import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
 import Contact from "../pages/Contact";
 import Login from "@/pages/login";
-import ProdectRoute from "@/components/common/prodectRoute";
 import NotFound from "@/pages/NotFound";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
 import MainShop from "@/pages/Shop/mainShop";
+import ProdectRoute from "@/components/common/ProdectRoute";
 
 export const router = createBrowserRouter([
   {
-    //Ecommerce
     path: "/",
     element: <Layout />,
     children: [
@@ -20,9 +19,9 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <ErrorBoundry>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Home />
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home />
+            </Suspense>
           </ErrorBoundry>
         ),
       },
@@ -40,19 +39,19 @@ export const router = createBrowserRouter([
         path: "shop/:category",
         element: (
           <ErrorBoundry>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Shop />
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Shop />
+            </Suspense>
           </ErrorBoundry>
         ),
       },
-      {   
+      {
         path: "about",
         element: (
           <ErrorBoundry>
-          <Suspense fallback={<div>Loading...</div>}>
-            <About />
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <About />
+            </Suspense>
           </ErrorBoundry>
         ),
       },
@@ -60,9 +59,9 @@ export const router = createBrowserRouter([
         path: "contact",
         element: (
           <ErrorBoundry>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Contact />
-          </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Contact />
+            </Suspense>
           </ErrorBoundry>
         ),
       },
@@ -70,11 +69,11 @@ export const router = createBrowserRouter([
         path: "login",
         element: (
           <ErrorBoundry>
-          <ProdectRoute auth>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Login />
-          </Suspense>
-          </ProdectRoute>
+            <ProdectRoute auth>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Login />
+              </Suspense>
+            </ProdectRoute>
           </ErrorBoundry>
         ),
       },
@@ -84,11 +83,11 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: (
       <ErrorBoundry>
-      {/* <ProdectRoute> */}
-      <Suspense fallback={<div>Loading...</div>}>
-        <Dashboard />
-      </Suspense>
-      {/* </ProdectRoute> */}
+        {/* <ProdectRoute> */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Dashboard />
+        </Suspense>
+        {/* </ProdectRoute> */}
       </ErrorBoundry>
     ),
   },
@@ -96,9 +95,9 @@ export const router = createBrowserRouter([
     path: "*",
     element: (
       <ErrorBoundry>
-      <Suspense fallback={<div>Loading...</div>}>
-        <NotFound />
-      </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <NotFound />
+        </Suspense>
       </ErrorBoundry>
     ),
   },
