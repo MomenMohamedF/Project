@@ -49,6 +49,9 @@ const Footer = () => {
                 <Link
                   to="/shop/watches"
                   className="hover:text-Yprimary transition"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   Watches
                 </Link>
@@ -57,6 +60,9 @@ const Footer = () => {
                 <Link
                   to="/shop/bags"
                   className="hover:text-Yprimary transition"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   Bags
                 </Link>
@@ -65,6 +71,9 @@ const Footer = () => {
                 <Link
                   to="/shop/bracelets"
                   className="hover:text-Yprimary transition"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   Bracelets
                 </Link>
@@ -73,6 +82,9 @@ const Footer = () => {
                 <Link
                   to="/shop/new-arrivals"
                   className="hover:text-Yprimary transition"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                 >
                   New Arrivals
                 </Link>

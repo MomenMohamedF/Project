@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { About, Home, Dashboard } from "../pages";
+import { About, Dashboard } from "../pages";
+import Home from "../pages/Home/Home";
 import { Suspense } from "react";
 import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
@@ -19,9 +20,7 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <ErrorBoundry>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Home />
-            </Suspense>
+            <Home />
           </ErrorBoundry>
         ),
       },
