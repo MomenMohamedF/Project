@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Auréne favicon — A</title>
+  <rect width="64" height="64" fill="none"/>
+  <!-- Circular gold background -->
+  <circle cx="32" cy="32" r="30" fill="#C8A165"/>
+  <!-- Stylized 'A' monogram -->
+  <path d="M18 48 L31 12 L44 48 L38 48 L36 44 L26 44 L24 48 Z" fill="#ffffff"/>
+  <!-- Crossbar -->
+  <rect x="26" y="34" width="12" height="4" rx="2" fill="#ffffff"/>
+</svg>

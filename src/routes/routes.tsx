@@ -4,12 +4,13 @@ import Home from "../pages/Home/Home";
 import { Suspense } from "react";
 import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
-import Contact from "../pages/Contact";
+import Contact from "../pages/Contact/Contact";
 import Login from "@/pages/login";
 import NotFound from "@/pages/NotFound";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
 import MainShop from "@/pages/Shop/mainShop";
 import ProdectRoute from "@/components/common/ProdectRoute";
+import Cart from "@/pages/Cart/cart";
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +97,16 @@ export const router = createBrowserRouter([
       <ErrorBoundry>
         <Suspense fallback={<div>Loading...</div>}>
           <NotFound />
+        </Suspense>
+      </ErrorBoundry>
+    ),
+  },
+  {
+    path: "cart",
+    element: (
+      <ErrorBoundry>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Cart />
         </Suspense>
       </ErrorBoundry>
     ),

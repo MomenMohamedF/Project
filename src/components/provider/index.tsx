@@ -8,10 +8,12 @@ const queryClient = new QueryClient({
     },
   },
 });
+import { CartProvider } from "./cart";
+
 const MainProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <CartProvider>{children}</CartProvider>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );

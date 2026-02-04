@@ -1,10 +1,15 @@
 import { CiHeart } from "react-icons/ci";
 import { FaStar } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
+import { useCart } from "../provider/cart";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Card2 = () => {
   const { category } = useParams<{ category: string }>();
   const activeCategory = category || "watches";
+  const { state, addItem } = useCart();
+  const [addingId, setAddingId] = useState<string | number | null>(null);
 
   const WatchesProducts = [
     {
@@ -270,7 +275,7 @@ const Card2 = () => {
           >
             <div className="relative bg-gray-100 h-48 overflow-hidden">
               <img
-                src={`../../../assets/images/${product.image}`}
+                src={`../../assets/images/${product.image}`}
                 alt={product.name}
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-300 dark:brightness-90 dark:hover:brightness-100 "
               />
@@ -297,8 +302,39 @@ const Card2 = () => {
                 </span>
                 <span>({product.rating})</span>
               </div>
-              <button className="w-full bg-black text-white py-2 rounded-2xl font-semibold hover:bg-gray-800 transition-colors">
-                Add to Cart
+              <button
+                onClick={() => {
+                  const itemId = `${product.image}-${product.id}`;
+                  const exists = state.items.some((i) => i.id === itemId);
+                  if (exists) {
+                    toast.error("This item is already in your cart");
+                    return;
+                  }
+                  setAddingId(product.id);
+                  addItem({
+                    id: itemId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                  });
+                  toast.success("Added to cart");
+                  setTimeout(() => setAddingId(null), 700);
+                }}
+                className="w-full bg-black text-white py-2 rounded-2xl font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50"
+                disabled={
+                  addingId === product.id ||
+                  state.items.some(
+                    (i) => i.id === `${product.image}-${product.id}`,
+                  )
+                }
+              >
+                {state.items.some(
+                  (i) => i.id === `${product.image}-${product.id}`,
+                )
+                  ? "In Cart"
+                  : addingId === product.id
+                    ? "Added"
+                    : "Add to Cart"}
               </button>
             </div>
           </div>

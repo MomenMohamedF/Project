@@ -16,34 +16,53 @@ const Login = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (formData: any) => {
       const endpoint = activeTab === "login" ? "auth/sign-in" : "auth/sign-up";
-      return api.post(endpoint, formData);
+      // Transform signup data to match API requirements
+      const payload =
+        activeTab === "login"
+          ? formData
+          : {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              email: formData.email,
+              userName: formData.userName,
+              phoneNumber: formData.phoneNumber,
+              region: formData.region,
+              password: formData.password,
+              confirmPassword: formData.confirmPassword,
+            };
+      return api.post(endpoint, payload);
     },
     onSuccess: (data) => {
       navigate("/");
       if (activeTab === "login") {
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data.user));
+        toast.success("Login successful!");
+      } else {
+        localStorage.setItem("user", JSON.stringify(data.data.user));
+        toast.success(data.data.message || "Account created!");
       }
-      toast.success(
-        activeTab === "login" ? "Login successful!" : "Account created!"
-      );
       console.log(data);
     },
-    onError: (error) => {
-      const message =
-        error instanceof Error ? error.message : "An error occurred";
+    onError: (error: any) => {
+      let message = "An error occurred";
+      if (error.response?.status === 404) {
+        message = "Endpoint not found — check API URL";
+      } else if (error.response?.status === 400) {
+        message = error.response?.data?.message || "Invalid input";
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
       toast.error(message);
-      console.log(message);
+      console.error("Error:", error.response?.data || error.message);
     },
   });
   const [activeTab, setActiveTab] = useState<"login" | "create">("login");
 
   const loginSchema = z.object({
-    email: z
-      .string()
-      .email({
-        message: "Please enter a valid email address (e.g. user@example.com).",
-      }),
+    email: z.string().email({
+      message: "Please enter a valid email address (e.g. user@example.com).",
+    }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters." })
@@ -52,21 +71,32 @@ const Login = () => {
         {
           message:
             "Password must contain uppercase, lowercase, number, and special character.",
-        }
+        },
       ),
   });
 
-  const createSchema = loginSchema.extend({
-    firstName: z.string().min(1, { message: "Please enter a first name." }),
-    lastName: z.string().min(1, { message: "Please enter a last name." }),
-    phoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
-      message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
-    }),
-    region: z.string().min(1, { message: "Please select a region." }),
-    agreeToTerms: z.boolean().refine((value) => value === true, {
-      message: "Please agree to the terms and conditions.",
-    }),
-  });
+  const createSchema = loginSchema
+    .extend({
+      firstName: z.string().min(1, { message: "Please enter a first name." }),
+      lastName: z.string().min(1, { message: "Please enter a last name." }),
+      userName: z
+        .string()
+        .min(3, { message: "Username must be at least 3 characters." }),
+      phoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
+        message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
+      }),
+      region: z.string().min(1, { message: "Please select a region." }),
+      confirmPassword: z
+        .string()
+        .min(1, { message: "Please confirm your password." }),
+      agreeToTerms: z.boolean().refine((value) => value === true, {
+        message: "Please agree to the terms and conditions.",
+      }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords don't match",
+      path: ["confirmPassword"],
+    });
 
   const schema = activeTab === "login" ? loginSchema : createSchema;
 
@@ -84,8 +114,10 @@ const Login = () => {
       password: "",
       firstName: "",
       lastName: "",
+      userName: "",
       phoneNumber: "",
       region: "",
+      confirmPassword: "",
       agreeToTerms: false,
     },
   });
@@ -270,6 +302,23 @@ const Login = () => {
                       )}
                     </div>
 
+                    {/* Username Input */}
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Username"
+                        className="input"
+                        {...register("userName", {
+                          required: "Username is required",
+                        })}
+                      />
+                      {errors.userName && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.userName.message}
+                        </p>
+                      )}
+                    </div>
+
                     {/* Phone Input */}
                     <div>
                       <input
@@ -300,6 +349,23 @@ const Login = () => {
                       {errors.password && (
                         <p className="text-lg text-red-500 font-bold mt-1">
                           {errors.password.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Confirm Password Input */}
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="input"
+                        {...register("confirmPassword", {
+                          required: "Please confirm your password",
+                        })}
+                      />
+                      {errors.confirmPassword && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.confirmPassword.message}
                         </p>
                       )}
                     </div>
