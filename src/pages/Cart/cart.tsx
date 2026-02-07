@@ -12,6 +12,9 @@ const Cart = () => {
     (s, i) => s + parsePrice(i.price) * i.quantity,
     0,
   );
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <div className="dark:bg-gray-900">

@@ -13,6 +13,36 @@ import ErrorBoundry from "@/components/common/ErrorBoundry";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [location, setLocation] = useState<{ long: number; lat: number } | null>(
+    null,
+  );
+  const [locationError, setLocationError] = useState<string | null>(null);
+
+  const handleGetLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            long: position.coords.longitude,
+            lat: position.coords.latitude,
+          });
+          setLocationError(null);
+          toast.success("Location retrieved successfully!");
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocationError(
+            "Failed to get location. Please allow location access.",
+          );
+          toast.error("Failed to get location.");
+        },
+      );
+    } else {
+      setLocationError("Geolocation is not supported by your browser.");
+      toast.error("Geolocation not supported.");
+    }
+  };
+
   const { mutate, isPending } = useMutation({
     mutationFn: (formData: any) => {
       const endpoint = activeTab === "login" ? "auth/sign-in" : "auth/sign-up";
@@ -29,6 +59,7 @@ const Login = () => {
               region: formData.region,
               password: formData.password,
               confirmPassword: formData.confirmPassword,
+              location: location,
             };
       return api.post(endpoint, payload);
     },
@@ -124,9 +155,15 @@ const Login = () => {
 
   useEffect(() => {
     reset();
+    setLocation(null);
+    setLocationError(null);
   }, [activeTab, reset]);
 
   const onSubmit: SubmitHandler<LoginForm> = (formData) => {
+    if (activeTab === "create" && !location) {
+      toast.error("Please get your location before creating an account.");
+      return;
+    }
     mutate(formData);
   };
   useEffect(() => {
@@ -380,6 +417,38 @@ const Login = () => {
                         <option value="west">Spain</option>
                         <option value="center">France</option>
                       </select>
+                      {errors.region && (
+                        <p className="text-lg text-red-500 font-bold mt-1">
+                          {errors.region.message}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Location Button */}
+                    <div className="flex flex-col gap-1">
+                      <button
+                        type="button"
+                        onClick={handleGetLocation}
+                        className={`w-full py-2 px-4 rounded-lg font-semibold border transition-colors ${
+                          location
+                            ? "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-300 dark:border-green-700"
+                            : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
+                        }`}
+                      >
+                        {location
+                          ? `Location Set: ${location.lat.toFixed(
+                              4,
+                            )}, ${location.long.toFixed(4)}`
+                          : "Get My Location"}
+                      </button>
+                      {locationError && (
+                        <p className="text-sm text-red-500">{locationError}</p>
+                      )}
+                      {!location && !locationError && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          Location is required for account creation.
+                        </p>
+                      )}
                     </div>
 
                     {/* Terms Checkbox */}
