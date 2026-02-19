@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  timeout: 30000, // 30 seconds instead of 10
+  timeout: 15000, 
 });
 
 export const fetchProducts = async () => {
@@ -23,7 +23,20 @@ export const updateProduct = async (
   return response.data;
 };
 
+
 export const deleteProduct = async (id: string) => {
   const response = await api.delete(`/products/${id}`);
+  return response.data;
+};
+
+export const forgetPassword = async (email: string) => {
+  const response = await api.post("/auth/forget-password", { email });
+  return response.data;
+};
+
+export const resetPassword = async (token: string, newPassword: string) => {
+  const response = await api.post(`/auth/reset-password/${token}`, {
+    newPassword,
+  });
   return response.data;
 };

@@ -46,7 +46,7 @@ const Login = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: (formData: any) => {
       const endpoint = activeTab === "login" ? "auth/sign-in" : "auth/sign-up";
-      // Transform signup data to match API requirements
+      
       const payload =
         activeTab === "login"
           ? formData
@@ -59,7 +59,9 @@ const Login = () => {
               region: formData.region,
               password: formData.password,
               confirmPassword: formData.confirmPassword,
-              location: location,
+              location: location
+                ? { lat: location.lat, long: location.long }
+                : null,
             };
       return api.post(endpoint, payload);
     },
@@ -170,6 +172,34 @@ const Login = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+
+  const { mutate: mutateForgotPassword, isPending: isForgotPasswordPending } =
+    useMutation({
+      mutationFn: (email: string) => {
+        return api.post("auth/forget-password", { email });
+      },
+      onSuccess: (data) => {
+        toast.success(data.data.message || "Reset link sent to your email!");
+        setIsForgotPasswordOpen(false);
+      },
+      onError: (error: any) => {
+        toast.error(
+          error.response?.data?.message || "Failed to send reset link."
+        );
+      },
+    });
+
+  const handleForgotPasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!forgotPasswordEmail) {
+      toast.error("Please enter your email.");
+      return;
+    }
+    mutateForgotPassword(forgotPasswordEmail);
+  };
+
   return (
     <>
       <Tap />
@@ -273,12 +303,13 @@ const Login = () => {
 
                     {/* ForgotPassword */}
                     <div className="text-right">
-                      <a
-                        href="#"
+                      <button
+                        type="button"
+                        onClick={() => setIsForgotPasswordOpen(true)}
                         className="text-sm text-gray-600 dark:text-gray-400 hover:text-Yprimary"
                       >
                         Forgot password?
-                      </a>
+                      </button>
                     </div>
 
                     {/* LoginButton */}
@@ -424,30 +455,52 @@ const Login = () => {
                       )}
                     </div>
 
+
+                    {/* Location Inputs */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <input
+                          type="number"
+                          placeholder="Latitude"
+                          className="input"
+                          value={location?.lat || ""}
+                          onChange={(e) =>
+                            setLocation((prev) => ({
+                              long: prev?.long || 0,
+                              lat: parseFloat(e.target.value) || 0,
+                            }))
+                          }
+                          required
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          placeholder="Longitude"
+                          className="input"
+                          value={location?.long || ""}
+                          onChange={(e) =>
+                            setLocation((prev) => ({
+                              lat: prev?.lat || 0,
+                              long: parseFloat(e.target.value) || 0,
+                            }))
+                          }
+                          required
+                        />
+                      </div>
+                    </div>
+
                     {/* Location Button */}
                     <div className="flex flex-col gap-1">
                       <button
                         type="button"
                         onClick={handleGetLocation}
-                        className={`w-full py-2 px-4 rounded-lg font-semibold border transition-colors ${
-                          location
-                            ? "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-300 dark:border-green-700"
-                            : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700"
-                        }`}
+                        className="w-full py-2 px-4 rounded-lg font-semibold border bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
                       >
-                        {location
-                          ? `Location Set: ${location.lat.toFixed(
-                              4,
-                            )}, ${location.long.toFixed(4)}`
-                          : "Get My Location"}
+                        Auto-detect Location
                       </button>
                       {locationError && (
                         <p className="text-sm text-red-500">{locationError}</p>
-                      )}
-                      {!location && !locationError && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          Location is required for account creation.
-                        </p>
                       )}
                     </div>
 
@@ -508,6 +561,53 @@ const Login = () => {
           </ErrorBoundry>
         </div>
       </div>
+
+      {/* Forgot Password Modal */}
+      {isForgotPasswordOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md relative">
+            <button
+              onClick={() => setIsForgotPasswordOpen(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              ✕
+            </button>
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              Reset Password
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Enter your email address and we'll send you a link to reset your
+              password.
+            </p>
+            <form onSubmit={handleForgotPasswordSubmit} className="space-y-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="input w-full"
+                value={forgotPasswordEmail}
+                onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                required
+              />
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsForgotPasswordOpen(false)}
+                  className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isForgotPasswordPending}
+                  className="px-6 py-2 bg-Yprimary text-black font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
+                >
+                  {isForgotPasswordPending ? "Sending..." : "Send Link"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

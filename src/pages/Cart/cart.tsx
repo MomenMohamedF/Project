@@ -1,6 +1,7 @@
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import { useCart } from "@/components/provider/cart";
+import { useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 const parsePrice = (p: string) => Number(p.replace(/[^0-9.-]+/g, ""));
@@ -12,14 +13,15 @@ const Cart = () => {
     (s, i) => s + parsePrice(i.price) * i.quantity,
     0,
   );
+
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="dark:bg-gray-900">
       <Header />
-      <div className="max-w-6xl mx-auto py-24 px-4  mt-10">
+      <div className="max-w-6xl mx-auto py-24 px-4  mt-10 ">
         <h2 className="text-2xl font-extrabold mb-6 text-gray-900 dark:text-white ">
           Your Cart
         </h2>

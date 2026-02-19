@@ -4,7 +4,7 @@ const Home = lazy(() => import("./Home/Home"));
 const About = lazy(() => import("./About/About"));
 const Shop = lazy(() => import("./Shop/Shop"));
 const Dashboard = lazy(() => import("./Dashboard/Dashboard"));
-const Login = lazy(() => import("./login"));
+const Login = lazy(() => import("./Login/login"));
 const Contact = lazy(() => import("./Contact/Contact"));
 const Cart = lazy(() => import("./Cart/cart"));
 

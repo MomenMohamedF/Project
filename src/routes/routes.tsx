@@ -5,12 +5,13 @@ import { Suspense } from "react";
 import Layout from "../pages/layout";
 import Shop from "../pages/Shop/Shop";
 import Contact from "../pages/Contact/Contact";
-import Login from "@/pages/login";
-import NotFound from "@/pages/NotFound";
+import Login from "@/pages/Login/login";
+import NotFound from "@/pages/NotFound/NotFound";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
 import MainShop from "@/pages/Shop/mainShop";
 import ProdectRoute from "@/components/common/ProdectRoute";
 import Cart from "@/pages/Cart/cart";
+import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -107,6 +108,16 @@ export const router = createBrowserRouter([
       <ErrorBoundry>
         <Suspense fallback={<div>Loading...</div>}>
           <Cart />
+        </Suspense>
+      </ErrorBoundry>
+    ),
+  },
+  {
+    path: "auth/reset-password/:token",
+    element: (
+      <ErrorBoundry>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ResetPassword />
         </Suspense>
       </ErrorBoundry>
     ),
