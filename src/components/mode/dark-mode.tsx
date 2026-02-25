@@ -17,8 +17,8 @@ const DarkMode = () => {
     modee = "Dark";
   }
   return (
-    <Button onClick={() => setMode(!mode)}>
-      {modee}-mode
+    <Button className="rounded-full" onClick={() => setMode(!mode)}>
+      {/* {modee}-mode */}
       <MdDarkMode />
     </Button>
   );
