@@ -146,4 +146,31 @@
   .input-name {
     @apply px-4 py-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-Yprimary dark:text-white;
   }
+  
+  .walking-container {
+    position: absolute;
+    animation: dino-walk-x 18s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .walking-character {
+    display: inline-block;
+    font-size: 1.75rem;
+    animation: dino-bounce 0.4s infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+}
+
+@keyframes dino-walk-x {
+  0% { left: 5%; transform: scaleX(-1); }
+  49.99% { left: 90%; transform: scaleX(-1); }
+  50% { left: 90%; transform: scaleX(1); }
+  99.99% { left: 5%; transform: scaleX(1); }
+  100% { left: 5%; transform: scaleX(-1); }
+}
+
+@keyframes dino-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
 }

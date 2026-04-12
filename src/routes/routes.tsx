@@ -12,6 +12,7 @@ import MainShop from "@/pages/Shop/mainShop";
 import ProdectRoute from "@/components/common/ProdectRoute";
 import Cart from "@/pages/Cart/cart";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
+import CrystalScene from "@/components/3d/CrystalScene";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,7 @@ export const router = createBrowserRouter([
           </ErrorBoundry>
         ),
       },
+      
     ],
   },
   {

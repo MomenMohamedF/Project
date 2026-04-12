@@ -1,13 +1,11 @@
-import { api } from "@/lib/utils/api";
+import { fetchProducts } from "@/lib/utils/api";
 import { useQuery } from "@tanstack/react-query";
 
 const useProducts = () => {
-  function getData() {
-    return api.get("products/");
-  }
   const { data, isPending, error } = useQuery({
     queryKey: ["products"],
-    queryFn: getData,
+    queryFn: fetchProducts,
+    retry: 0,
   });
 
   return { data, isPending, error };
