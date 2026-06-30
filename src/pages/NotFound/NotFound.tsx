@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaTriangleExclamation } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 const NotFound = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-6">
       <div className="text-center">
@@ -13,10 +16,10 @@ const NotFound = () => {
           404
         </h1>
         <h2 className="text-2xl md:text-4xl font-bold mb-4">
-          Oops! Page Not Found
+          {t("notFound.title")}
         </h2>
         <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-          The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+          {t("notFound.subtitle")}
         </p>
 
         <Link

@@ -1,13 +1,15 @@
 import { cn } from "@/lib/utils/cn";
 import { Slider } from "@/components/ui/slider";
+import { useTranslation } from "react-i18next";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 
 export function Slide({ className, ...props }: SliderProps) {
+  const { t } = useTranslation();
   return (
     <div className="w-full border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56 ">
       <h1 className="font-[Playfair Display] font-semibold  text-lg mb-6">
-        Price Range
+        {t("shop.filtersList.priceRange")}
       </h1>
       <div className="flex flex-col items-center">
         <Slider
@@ -31,3 +33,4 @@ export function Slide({ className, ...props }: SliderProps) {
   );
 }
 export default Slide;
+

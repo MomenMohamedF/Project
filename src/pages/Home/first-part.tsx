@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Spline from "@splinetool/react-spline";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +24,7 @@ const HeroSection = () => {
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 border-4 border-Yprimary border-t-transparent rounded-full animate-spin mb-6"></div>
             <p className="text-white/80 font-medium tracking-widest text-sm uppercase animate-pulse">
-              Entering 3D Space
+              {t("home.hero.loading")}
             </p>
           </div>
         </div>
@@ -32,21 +34,20 @@ const HeroSection = () => {
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 md:px-0 ">
         <div className="max-w-5xl p-8 md:p-16 rounded-[2.5rem] bg-black/10 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] animate-in fade-in zoom-in slide-in-from-bottom-10 duration-1000 ease-out">
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight font-playfair">
-            Elevate Every <br className="hidden md:block" />
+            {t("home.hero.title")} <br className="hidden md:block" />
             <span className="text-Yprimary drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]">
-              Moment
+              {t("home.hero.moment")}
             </span>
           </h1>
           <p className="mt-4 text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
-            Immerse yourself in our curated collection of premium accessories,
-            where craftsmanship meets futuristic design.
+            {t("home.hero.subtitle")}
           </p>
           <button
             onClick={() => navigate("/shop")}
             className="group relative px-10 py-4 bg-Yprimary text-black rounded-full font-bold text-lg overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-Yprimary/20"
           >
             <span className="relative z-10 transition-colors duration-300">
-              Explore Collection
+              {t("common.exploreCollection")}
             </span>
             <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
           </button>
@@ -60,3 +61,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

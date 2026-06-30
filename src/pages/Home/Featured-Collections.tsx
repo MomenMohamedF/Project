@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 const FeaturedCollections = () => {
+  const { t } = useTranslation();
   return (
     <div className="w-full mt-4 px-0 md:px-8 lg:px-20 py-8">
-      <div className="text-center font-bold text-2xl md:text-4xl mb-8">
-        <h1>Featured</h1>
-        <h1>Collections</h1>
+      <div className="text-center font-bold text-2xl md:text-4xl mb-8 flex flex-col items-center">
+        <h1>{t("home.featuredCollections.title1")}</h1>
+        <h1>{t("home.featuredCollections.title2")}</h1>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap justify-center gap-4 md:gap-6 mt-8 ">
         <img
@@ -27,3 +30,4 @@ const FeaturedCollections = () => {
 };
 
 export default FeaturedCollections;
+

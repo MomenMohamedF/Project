@@ -1,22 +1,24 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Box = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { category: currentCategory } = useParams<{ category: string }>();
 
   const categories = [
-    { id: "watches", label: "Watches", count: 9 },
-    { id: "bags", label: "Bags", count: 12 },
-    { id: "bracelets", label: "Bracelets", count: 6 },
-    { id: "rings", label: "Rings", count: 9 },
+    { id: "watches", label: t("shop.categories.watches.title"), count: 9 },
+    { id: "bags", label: t("shop.categories.bags.title"), count: 12 },
+    { id: "bracelets", label: t("shop.categories.bracelets.title"), count: 6 },
+    { id: "rings", label: t("shop.categories.rings.title"), count: 9 },
   ];
 
   return (
     <div className="w-full border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
       <h3 className="text-lg font-bold text-black mb-6  dark:text-white/56">
-        Category
+        {t("shop.filtersList.category")}
       </h3>
       <div className="flex flex-col gap-4">
         {categories.map((category) => (
@@ -50,3 +52,4 @@ const Box = () => {
 };
 
 export default Box;
+

@@ -1,10 +1,13 @@
 import Card1 from "@/components/cards/card1";
+import { useTranslation } from "react-i18next";
 
 const HotOffers = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <h2 className="text-center font-bold text-3xl md:text-4xl m-8 font-playfair">
-        🔥 Hot Offers
+        {t("home.hotOffers.title")}
       </h2>
 
       {/* three cards */}
@@ -19,12 +22,12 @@ const HotOffers = () => {
             className="h-48 w-full object-cover transition-transform duration-300 hover:scale-110"
           />
           <div className="absolute top-3 right-3 z-50 font-[Poppins] bg-DYprimary rounded-2xl text-white px-2 py-1 ">
-            Popular
+            {t("home.hotOffers.popular")}
           </div>
           <div className="font-[Poppins] p-4 flex flex-col gap-2">
-            <h1 className="font-semibold">Designer Rings</h1>
+            <h1 className="font-semibold">{t("home.hotOffers.designerRings")}</h1>
             <p className="text-[#4B5563] text-sm">
-              Perfect symbols of love and style
+              {t("home.hotOffers.designerRingsDesc")}
             </p>
             <div className="font-[Inter] w-full flex items-center justify-between mt-4">
               <div className="flex flex-row gap-3 items-center">
@@ -49,9 +52,9 @@ const HotOffers = () => {
             className="h-48 w-full object-cover transition-transform duration-300 hover:scale-110"
           />
           <div className="font-[Poppins] p-4 flex flex-col gap-2">
-            <h1 className="font-semibold">Charm Bracelets</h1>
+            <h1 className="font-semibold">{t("home.hotOffers.charmBracelets")}</h1>
             <p className="text-GrayPrimary text-sm">
-              Express your unique personality
+              {t("home.hotOffers.charmBraceletsDesc")}
             </p>
             <div className="font-[Inter] w-full flex items-center justify-between mt-4">
               <div className="flex flex-row gap-3 items-center">
@@ -74,3 +77,4 @@ const HotOffers = () => {
 };
 
 export default HotOffers;
+

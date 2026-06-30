@@ -10,27 +10,28 @@ import { FiAward, FiHeadphones } from "react-icons/fi";
 import { GoGlobe } from "react-icons/go";
 import { LuTruck } from "react-icons/lu";
 import { MdOutlineRocketLaunch } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900/95">
-      <Tap pageName="About" />
+      <Tap pageName={t("nav.about")} />
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-              Where Elegance Meets{" "}
-              <span className="text-yellow-500">Craftsmanship</span>
+              {t("about.hero.title")}{" "}
+              <span className="text-yellow-500">{t("about.hero.highlight")}</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Discover our story and passion for creating stunning accessories
-              that inspire. Every piece tells a tale of dedication, artistry,
-              and timeless beauty.
+              {t("about.hero.subtitle")}
             </p>
           </div>
           <div className="relative">
@@ -50,11 +51,10 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4 text-yprimary">
-              Meet Our Visionary
+              {t("about.visionary.title")}
             </h2>
             <p className="text-muted-foreground">
-              Behind every exceptional piece lies the passion and expertise of
-              our founder
+              {t("about.visionary.subtitle")}
             </p>
           </div>
 
@@ -64,14 +64,14 @@ const About = () => {
                 <Avatar className="w-40 h-40 border-4 border-yellow-500 shadow-md">
                   <AvatarImage
                     src="./assets/images/About-leader.png"
-                    alt="Rosita Fileb"
+                    alt={t("about.visionary.name")}
                   />
                   <AvatarFallback>RF</AvatarFallback>
                 </Avatar>
                 <div className="mt-4">
-                  <h3 className="text-2xl font-bold">Rosita Fileb</h3>
+                  <h3 className="text-2xl font-bold">{t("about.visionary.name")}</h3>
                   <p className="text-yellow-600 font-medium text-sm">
-                    Visionary Designer & Founder
+                    {t("about.visionary.role")}
                   </p>
                 </div>
                 <div className="flex gap-2 justify-center mt-3">
@@ -79,27 +79,23 @@ const About = () => {
                     variant="secondary"
                     className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
                   >
-                    15+ Years Exp
+                    {t("about.visionary.exp15")}
                   </Badge>
                   <Badge
                     variant="outline"
                     className="border-yellow-500 text-yellow-600"
                   >
-                    Luxury Expert
+                    {t("about.visionary.expert")}
                   </Badge>
                 </div>
               </div>
 
               <div className="flex-1 space-y-6 text-center md:text-left">
                 <blockquote className="italic text-lg text-foreground/80 border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-50/50 dark:bg-yellow-900/10 rounded-r">
-                  "Passionate about blending tradition with innovation, I've
-                  dedicated my career to creating accessories that transcend
-                  trends and become timeless treasures."
+                  "{t("about.visionary.quote")}"
                 </blockquote>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  With over 15 years of experience shaping the world of luxury
-                  wear, our founder brings unparalleled expertise and artistic
-                  vision to every creation.
+                  {t("about.visionary.description")}
                 </p>
 
                 <div className="grid grid-cols-3 gap-4 pt-4 border-t">
@@ -108,7 +104,7 @@ const About = () => {
                       15+
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      Years Experience
+                      {t("about.visionary.stats.exp")}
                     </span>
                   </div>
                   <div className="text-center">
@@ -116,7 +112,7 @@ const About = () => {
                       500+
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      Designs Created
+                      {t("about.visionary.stats.designs")}
                     </span>
                   </div>
                   <div className="text-center">
@@ -124,7 +120,7 @@ const About = () => {
                       50+
                     </span>
                     <span className="text-xs text-muted-foreground">
-                      Awards Won
+                      {t("about.visionary.stats.awards")}
                     </span>
                   </div>
                 </div>
@@ -137,9 +133,9 @@ const About = () => {
       {/* Section3 */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-yellow-600">Our Journey</h2>
+          <h2 className="text-3xl font-bold text-yellow-600">{t("about.journey.title")}</h2>
           <p className="text-muted-foreground mt-2">
-            Key milestones that define our commitment to quality and style
+            {t("about.journey.subtitle")}
           </p>
         </div>
 
@@ -149,12 +145,11 @@ const About = () => {
               <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4 text-yellow-600">
                 <MdOutlineRocketLaunch className="w-6 h-6" />
               </div>
-              <CardTitle>Founded 2020</CardTitle>
+              <CardTitle>{t("about.journey.founded.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm ">
-                Our journey began with a vision to redefine accessory design and
-                bring elegance to everyday life.
+                {t("about.journey.founded.desc")}
               </p>
             </CardContent>
           </Card>
@@ -164,12 +159,11 @@ const About = () => {
               <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4 text-yellow-600">
                 <FaRegGem className="w-6 h-6" />
               </div>
-              <CardTitle>First Collection 2021</CardTitle>
+              <CardTitle>{t("about.journey.firstCollection.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm ">
-                Launched our debut line, celebrated for its unique craftsmanship
-                and innovative design approach.
+                {t("about.journey.firstCollection.desc")}
               </p>
             </CardContent>
           </Card>
@@ -179,12 +173,11 @@ const About = () => {
               <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4 text-yellow-600">
                 <GoGlobe className="w-6 h-6" />
               </div>
-              <CardTitle>Global Reach 2023</CardTitle>
+              <CardTitle>{t("about.journey.globalReach.title")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                Expanded to international markets, bringing elegance worldwide
-                and touching lives across continents.
+                {t("about.journey.globalReach.desc")}
               </p>
             </CardContent>
           </Card>
@@ -196,11 +189,10 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-yellow-600">
-              Why Choose Us
+              {t("about.whyChooseUs.title")}
             </h2>
             <p className="text-muted-foreground mt-2">
-              Experience luxury like never before with our carefully curated
-              collection
+              {t("about.whyChooseUs.subtitle")}
             </p>
           </div>
 
@@ -209,27 +201,27 @@ const About = () => {
               <div className="p-4 bg-yellow-50 rounded-full text-yellow-600 shadow-sm">
                 <FiAward className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-semibold">Premium Quality</h3>
+              <h3 className="text-xl font-semibold">{t("about.whyChooseUs.quality.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Handcrafted with the finest materials and attention to detail
+                {t("about.whyChooseUs.quality.desc")}
               </p>
             </div>
             <div className="flex flex-col items-center p-6 space-y-4">
               <div className="p-4 bg-yellow-50 rounded-full text-yellow-600 shadow-sm">
                 <LuTruck className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-semibold">Fast Delivery</h3>
+              <h3 className="text-xl font-semibold">{t("about.whyChooseUs.delivery.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Quick and secure shipping to your doorstep worldwide
+                {t("about.whyChooseUs.delivery.desc")}
               </p>
             </div>
             <div className="flex flex-col items-center p-6 space-y-4">
               <div className="p-4 bg-yellow-50 rounded-full text-yellow-600 shadow-sm">
                 <FiHeadphones className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-semibold">24/7 Support</h3>
+              <h3 className="text-xl font-semibold">{t("about.whyChooseUs.support.title")}</h3>
               <p className="text-sm text-muted-foreground">
-                Dedicated customer service for all your needs
+                {t("about.whyChooseUs.support.desc")}
               </p>
             </div>
           </div>
@@ -242,46 +234,44 @@ const About = () => {
 
         <div className="container relative mx-auto px-4 text-center z-10">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-            Ready to Discover More?
+            {t("about.cta.title")}
           </h2>
           <p className="text-red-100 text-lg mb-8 max-w-2xl mx-auto">
-            Dive deeper into our world of exquisite accessories. Sign up for
-            exclusive offers and updates.
+            {t("about.cta.subtitle")}
           </p>
 
           <div className="flex justify-center gap-4 mb-10 text-white">
             <div className="bg-yellow-600/90 rounded-lg p-3 min-w-[70px]">
               <div className="text-2xl font-bold">47</div>
-              <div className="text-xs uppercase">Hours</div>
+              <div className="text-xs uppercase">{t("about.cta.hours")}</div>
             </div>
             <div className="bg-yellow-600/90 rounded-lg p-3 min-w-[70px]">
               <div className="text-2xl font-bold">23</div>
-              <div className="text-xs uppercase">Minutes</div>
+              <div className="text-xs uppercase">{t("about.cta.minutes")}</div>
             </div>
             <div className="bg-yellow-600/90 rounded-lg p-3 min-w-[70px]">
               <div className="text-2xl font-bold">41</div>
-              <div className="text-xs uppercase">Seconds</div>
+              <div className="text-xs uppercase">{t("about.cta.seconds")}</div>
             </div>
           </div>
 
           <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
             <Button className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold h-12 text-base">
-              Explore Collection
+              {t("common.exploreCollection")}
             </Button>
             <div className="flex flex-1 gap-2">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t("common.footer.emailPlaceholder")}
                 className="bg-transparent border-red-300 text-white placeholder:text-red-300 h-12"
               />
               <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold h-12">
-                Subscribe
+                {t("common.subscribe")}
               </Button>
             </div>
           </div>
           <p className="mt-6 text-xs text-red-200 opacity-80">
-            <span className="inline-block mr-1">🛡️</span> Secure checkout • Free
-            shipping on orders over $100
+            <span className="inline-block mr-1">🛡️</span> {t("about.cta.shippingNote")}
           </p>
         </div>
       </div>
@@ -290,3 +280,4 @@ const About = () => {
 };
 
 export default About;
+

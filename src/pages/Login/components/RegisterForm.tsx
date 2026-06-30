@@ -1,339 +1,273 @@
-import { useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "@/lib/utils/api";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import * as z from "zod";
+import {
+  FiUser,
+  FiMail,
+  FiLock,
+  FiEye,
+  FiEyeOff,
+  FiMapPin,
+} from "react-icons/fi";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
 
 const registerSchema = z
   .object({
-    email: z.string().email({
-      message: "Please enter a valid email address (e.g. user@example.com).",
-    }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters." })
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-        {
-          message:
-            "Password must contain uppercase, lowercase, number, and special character.",
-        },
-      ),
-    firstName: z.string().min(1, { message: "Please enter a first name." }),
-    lastName: z.string().min(1, { message: "Please enter a last name." }),
-    userName: z
-      .string()
-      .min(3, { message: "Username must be at least 3 characters." }),
-    phoneNumber: z.string().regex(/^(\+2)?01[0125][0-9]{8}$/, {
-      message: "Please enter phone number like 01(0,1,2,5)XXXXXXXX.",
-    }),
-    region: z.string().min(1, { message: "Please select a region." }),
-    confirmPassword: z
-      .string()
-      .min(1, { message: "Please confirm your password." }),
-    agreeToTerms: z.boolean().refine((value) => value === true, {
-      message: "Please agree to the terms and conditions.",
-    }),
+    firstName: z.string().min(2, "First name must be at least 2 characters"),
+    lastName: z.string().min(2, "Last name must be at least 2 characters"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6, "Please confirm your password"),
+    latitude: z.string().min(1, "Latitude is required"),
+    longitude: z.string().min(1, "Longitude is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
 
-type RegisterFormData = z.infer<typeof registerSchema>;
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const RegisterForm = () => {
-  const navigate = useNavigate();
-  const [location, setLocation] = useState<{ long: number; lat: number } | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
-
-  const handleGetLocation = () => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            long: position.coords.longitude,
-            lat: position.coords.latitude,
-          });
-          setLocationError(null);
-          toast.success("Location retrieved successfully!");
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          setLocationError("Failed to get location. Please allow location access.");
-          toast.error("Failed to get location.");
-        },
-      );
-    } else {
-      setLocationError("Geolocation is not supported by your browser.");
-      toast.error("Geolocation not supported.");
-    }
-  };
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: (formData: RegisterFormData) => {
-      const payload = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        userName: formData.userName,
-        phoneNumber: formData.phoneNumber,
-        region: formData.region,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-        location: location
-          ? { lat: location.lat, long: location.long }
-          : null,
-      };
-      return api.post("auth/sign-up", payload);
-    },
-    onSuccess: (data) => {
-      navigate("/");
-      localStorage.setItem("user", JSON.stringify(data.data.user));
-      toast.success(data.data.message || "Account created!");
-    },
-    onError: (error: any) => {
-      let message = "An error occurred";
-      if (error.response?.status === 404) {
-        message = "Endpoint not found — check API URL";
-      } else if (error.response?.status === 400) {
-        message = error.response?.data?.message || "Invalid input";
-      } else if (error instanceof Error) {
-        message = error.message;
-      }
-      toast.error(message);
-    },
-  });
+  const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm<RegisterFormData>({
+  } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      firstName: "",
-      lastName: "",
-      userName: "",
-      phoneNumber: "",
-      region: "",
-      confirmPassword: "",
-      agreeToTerms: false,
-    },
   });
 
-  const onSubmit: SubmitHandler<RegisterFormData> = (formData) => {
-    if (!location) {
-      toast.error("Please get your location before creating an account.");
-      return;
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setValue("latitude", position.coords.latitude.toString());
+          setValue("longitude", position.coords.longitude.toString());
+          toast.success("Location retrieved successfully!");
+        },
+        (error) => {
+          toast.error("Error getting location: " + error.message);
+        }
+      );
+    } else {
+      toast.error("Geolocation is not supported by this browser.");
     }
-    mutate(formData);
+  };
+
+  const onSubmit = (data: RegisterFormValues) => {
+    console.log(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* FirstName & LastName */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <input
-            type="text"
-            placeholder="First Name"
-            className="input-name w-full"
-            {...register("firstName")}
-          />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 px-1 py-1 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar"
+    >
+      <div className="grid grid-cols-2 gap-4">
+        {/* First Name */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t("login.form.firstName")}
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <FiUser size={18} />
+            </div>
+            <input
+              {...register("firstName")}
+              placeholder={t("login.form.firstNamePlaceholder")}
+              className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.firstName
+                  ? "border-red-500"
+                  : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+            />
+          </div>
           {errors.firstName && (
-            <p className="text-lg text-red-500 font-bold mt-1">
+            <p className="text-xs text-red-500 mt-1">
               {errors.firstName.message}
             </p>
           )}
         </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="input-name w-full"
-            {...register("lastName")}
-          />
+
+        {/* Last Name */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t("login.form.lastName")}
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <FiUser size={18} />
+            </div>
+            <input
+              {...register("lastName")}
+              placeholder={t("login.form.lastNamePlaceholder")}
+              className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.lastName
+                  ? "border-red-500"
+                  : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+            />
+          </div>
           {errors.lastName && (
-            <p className="text-lg text-red-500 font-bold mt-1">
+            <p className="text-xs text-red-500 mt-1">
               {errors.lastName.message}
             </p>
           )}
         </div>
       </div>
 
-      {/* Email Input */}
-      <div>
-        <input
-          type="email"
-          placeholder="Email or Username"
-          className="input"
-          {...register("email")}
-        />
+      {/* Email */}
+      <div className="space-y-1.5">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {t("login.form.email")}
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+            <FiMail size={18} />
+          </div>
+          <input
+            {...register("email")}
+            type="email"
+            placeholder={t("login.form.emailPlaceholder")}
+            className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+              errors.email
+                ? "border-red-500"
+                : "border-gray-200 dark:border-gray-700"
+            } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+          />
+        </div>
         {errors.email && (
-          <p className="text-lg text-red-500 font-bold mt-1">
-            {errors.email.message}
-          </p>
+          <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
         )}
       </div>
 
-      {/* Username Input */}
-      <div>
-        <input
-          type="text"
-          placeholder="Username"
-          className="input"
-          {...register("userName")}
-        />
-        {errors.userName && (
-          <p className="text-lg text-red-500 font-bold mt-1">
-            {errors.userName.message}
-          </p>
+      {/* Location */}
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t("login.form.location")}
+          </label>
+          <button
+            type="button"
+            onClick={handleGetLocation}
+            className="text-xs font-bold text-Yprimary flex items-center gap-1 hover:underline"
+          >
+            <FiMapPin size={12} />
+            {t("login.form.getLocation")}
+          </button>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="relative">
+            <input
+              {...register("latitude")}
+              placeholder={t("login.form.latitude")}
+              className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.latitude
+                  ? "border-red-500"
+                  : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white text-xs`}
+            />
+          </div>
+          <div className="relative">
+            <input
+              {...register("longitude")}
+              placeholder={t("login.form.longitude")}
+              className={`w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.longitude
+                  ? "border-red-500"
+                  : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white text-xs`}
+            />
+          </div>
+        </div>
+        {(errors.latitude || errors.longitude) && (
+          <p className="text-xs text-red-500 mt-1">Location is required</p>
         )}
       </div>
 
-      {/* Phone Input */}
-      <div>
-        <input
-          type="text"
-          placeholder="Phone Number"
-          className="input"
-          {...register("phoneNumber")}
-        />
-        {errors.phoneNumber && (
-          <p className="text-lg text-red-500 font-bold mt-1">
-            {errors.phoneNumber.message}
-          </p>
-        )}
-      </div>
-
-      {/* Password Input */}
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          className="input"
-          {...register("password")}
-        />
+      {/* Password */}
+      <div className="space-y-1.5">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {t("login.form.password")}
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+            <FiLock size={18} />
+          </div>
+          <input
+            {...register("password")}
+            type={showPassword ? "text" : "password"}
+            placeholder={t("login.form.passwordPlaceholder")}
+            className={`w-full pl-10 pr-12 py-3 bg-gray-50 dark:bg-gray-800 border ${
+              errors.password
+                ? "border-red-500"
+                : "border-gray-200 dark:border-gray-700"
+            } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+          >
+            {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+          </button>
+        </div>
         {errors.password && (
-          <p className="text-lg text-red-500 font-bold mt-1">
-            {errors.password.message}
-          </p>
+          <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
         )}
       </div>
 
-      {/* Confirm Password Input */}
-      <div>
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="input"
-          {...register("confirmPassword")}
-        />
+      {/* Confirm Password */}
+      <div className="space-y-1.5">
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+          {t("login.form.confirmPassword")}
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+            <FiLock size={18} />
+          </div>
+          <input
+            {...register("confirmPassword")}
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder={t("login.form.confirmPasswordPlaceholder")}
+            className={`w-full pl-10 pr-12 py-3 bg-gray-50 dark:bg-gray-800 border ${
+              errors.confirmPassword
+                ? "border-red-500"
+                : "border-gray-200 dark:border-gray-700"
+            } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+          >
+            {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+          </button>
+        </div>
         {errors.confirmPassword && (
-          <p className="text-lg text-red-500 font-bold mt-1">
+          <p className="text-xs text-red-500 mt-1">
             {errors.confirmPassword.message}
           </p>
         )}
       </div>
 
-      {/* Region Select */}
-      <div>
-        <select className="input" {...register("region")}>
-          <option value="">Select your region</option>
-          <option value="north">Egypt</option>
-          <option value="south">USA</option>
-          <option value="east">England</option>
-          <option value="west">Spain</option>
-          <option value="center">France</option>
-        </select>
-        {errors.region && (
-          <p className="text-lg text-red-500 font-bold mt-1">
-            {errors.region.message}
-          </p>
-        )}
-      </div>
-
-      {/* Location Inputs */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <input
-            type="number"
-            placeholder="Latitude"
-            className="input"
-            value={location?.lat || ""}
-            onChange={(e) =>
-              setLocation((prev) => ({
-                long: prev?.long || 0,
-                lat: parseFloat(e.target.value) || 0,
-              }))
-            }
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="number"
-            placeholder="Longitude"
-            className="input"
-            value={location?.long || ""}
-            onChange={(e) =>
-              setLocation((prev) => ({
-                lat: prev?.lat || 0,
-                long: parseFloat(e.target.value) || 0,
-              }))
-            }
-            required
-          />
-        </div>
-      </div>
-
-      {/* Location Button */}
-      <div className="flex flex-col gap-1">
-        <button
-          type="button"
-          onClick={handleGetLocation}
-          className="w-full py-2 px-4 rounded-lg font-semibold border bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
-        >
-          Auto-detect Location
-        </button>
-        {locationError && (
-          <p className="text-sm text-red-500">{locationError}</p>
-        )}
-      </div>
-
-      {/* Terms Checkbox */}
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          className="w-4 h-4 rounded border border-gray-300 dark:border-gray-600"
-          {...register("agreeToTerms")}
-        />
-        <span className="text-sm text-gray-600 dark:text-gray-400">
-          I agree to the Terms of Service and Privacy Policy
-        </span>
-      </div>
-      {errors.agreeToTerms && (
-        <p className="text-lg text-red-500 font-bold">
-          {errors.agreeToTerms.message}
-        </p>
-      )}
-
-      {/* Create Account Button */}
       <button
-        disabled={isPending}
         type="submit"
-        className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
+        className="w-full bg-Yprimary text-black font-bold py-3.5 rounded-xl hover:bg-black hover:text-Yprimary transition-all duration-300 shadow-lg shadow-Yprimary/20 active:scale-[0.98] mt-2"
       >
-        {isPending ? "Creating..." : "Create Account"}
+        {t("login.form.createAccount")}
       </button>
     </form>
   );
 };
 
 export default RegisterForm;
+

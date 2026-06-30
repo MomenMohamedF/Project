@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 import { useCart } from "../provider/cart";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const Card2 = () => {
+  const { t } = useTranslation();
   const { category } = useParams<{ category: string }>();
   const activeCategory = category || "watches";
   const { state, addItem } = useCart();
@@ -265,6 +267,38 @@ const Card2 = () => {
     }
   };
 
+  const tProductName = (name: string) => {
+    const key = name.toLowerCase().replace(/ /g, "");
+    const mapping: { [key: string]: string } = {
+      elegancegoldwatch: "eleganceGoldWatch",
+      modernsilverclassic: "modernSilverClassic",
+      heritageblackgold: "heritageBlackGold",
+      midnightlegacywatch: "midnightLegacyWatch",
+      vintagebronzeclassic: "vintageBronzeClassic",
+      ceramicpuregold: "ceramicPureGold",
+      classicleathertote: "classicLeatherTote",
+      crossbodyessential: "crossbodyEssential",
+      eveningclutch: "eveningClutch",
+      structuredsatchel: "structuredSatchel",
+      chainminibag: "chainMiniBag",
+      bucketbag: "bucketBag",
+      diamondsolitairering: "diamondSolitaireRing",
+      minimalistgoldband: "minimalistGoldBand",
+      emeraldstatementring: "emeraldStatementRing",
+      silverstackableset: "silverStackableSet",
+      goldenchainbracelet: "goldenChainBracelet",
+      leatherbandbracelet: "leatherBandBracelet",
+      naturalstonebeads: "naturalStoneBeads",
+      silvercuffbracelet: "silverCuffBracelet",
+      delicatecharmbracelet: "delicateCharmBracelet",
+      blackleatherband: "blackLeatherBand",
+      rosegolddiamond: "roseGoldDiamond",
+      crystaltennisbracelet: "crystalTennisBracelet",
+    };
+    const mappedKey = mapping[key];
+    return mappedKey ? t(`shop.products.${mappedKey}`) : name;
+  };
+
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
@@ -276,7 +310,7 @@ const Card2 = () => {
             <div className="relative bg-gray-100 h-48 overflow-hidden">
               <img
                 src={`../../assets/images/${product.image}`}
-                alt={product.name}
+                alt={tProductName(product.name)}
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-300 dark:brightness-90 dark:hover:brightness-100 "
               />
               <button className="absolute top-3  right-3 bg-white rounded-full p-2 shadow hover:shadow-lg transition-shadow dark:bg-gray-700">
@@ -286,7 +320,7 @@ const Card2 = () => {
             <div className="p-4">
               <div className="flex items-center justify-between mb-1.5">
                 <h3 className="font-semibold text-black mb-1 dark:text-white/56">
-                  {product.name}
+                  {tProductName(product.name)}
                 </h3>
                 <span className="text-lg font-bold text-green-600">
                   {product.price}
@@ -307,7 +341,7 @@ const Card2 = () => {
                   const itemId = `${product.image}-${product.id}`;
                   const exists = state.items.some((i) => i.id === itemId);
                   if (exists) {
-                    toast.error("This item is already in your cart");
+                    toast.error(t("shop.cartActions.alreadyInCart") || "Already in cart");
                     return;
                   }
                   setAddingId(product.id);
@@ -317,7 +351,7 @@ const Card2 = () => {
                     price: product.price,
                     image: product.image,
                   });
-                  toast.success("Added to cart");
+                  toast.success(t("shop.cartActions.successAdd") || "Added to cart");
                   setTimeout(() => setAddingId(null), 700);
                 }}
                 className="w-full bg-black text-white py-2 rounded-2xl font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50"
@@ -331,10 +365,10 @@ const Card2 = () => {
                 {state.items.some(
                   (i) => i.id === `${product.image}-${product.id}`,
                 )
-                  ? "In Cart"
+                  ? t("shop.cartActions.inCart") || "In Cart"
                   : addingId === product.id
-                    ? "Added"
-                    : "Add to Cart"}
+                    ? t("shop.cartActions.added") || "Added"
+                    : t("shop.cartActions.addToCart") || "Add to Cart"}
               </button>
             </div>
           </div>
@@ -345,3 +379,4 @@ const Card2 = () => {
 };
 
 export default Card2;
+

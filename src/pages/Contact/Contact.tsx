@@ -12,14 +12,17 @@ import {
 } from "react-icons/fa6";
 import { CiMail } from "react-icons/ci";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
     <div className="min-h-screen bg-background dark:bg-gray-900/95">
-      <Tap pageName="Contact" />
+      <Tap pageName={t("nav.contact")} />
 
       {/* Hero Section */}
       <div className="relative h-[40vh] md:h-[50vh] w-full overflow-hidden">
@@ -34,12 +37,11 @@ const Contact = () => {
         <div className="relative h-full flex flex-col items-center justify-center text-center px-4">
           <div className="bg-white/10 backdrop-blur-sm p-8 md:p-12 rounded-full border border-white/20 shadow-2xl">
             <h1 className="text-4xl md:text-6xl font-serif text-white drop-shadow-lg">
-              We'd Love to Hear <br /> from You.
+              {t("contact.hero.title")}
             </h1>
           </div>
           <p className="mt-6 text-white/90 max-w-xl text-center text-sm md:text-base drop-shadow-md font-medium">
-            Whether you have a question about our jewelry, need styling advice,
-            or want to share your feedback, we're here to help.
+            {t("contact.hero.subtitle")}
           </p>
         </div>
       </div>
@@ -50,55 +52,54 @@ const Contact = () => {
           <div className="space-y-8">
             <div>
               <h2 className="text-3xl font-serif font-bold mb-2">
-                Send us a Message
+                {t("contact.form.title")}
               </h2>
               <p className="text-muted-foreground">
-                Fill out the form below and we'll get back to you within 24
-                hours.
+                {t("contact.form.subtitle")}
               </p>
             </div>
 
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
+                  <Label htmlFor="name">{t("contact.form.name")}</Label>
                   <Input
                     id="name"
-                    placeholder="Your full name"
+                    placeholder={t("contact.form.namePlaceholder")}
                     className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-12"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("contact.form.email")}</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="your@email.com"
+                    placeholder={t("contact.form.emailPlaceholder")}
                     className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-12"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
+                <Label htmlFor="subject">{t("contact.form.subject")}</Label>
                 <Input
                   id="subject"
-                  placeholder="What is this regarding?"
+                  placeholder={t("contact.form.subjectPlaceholder")}
                   className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 h-12"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
+                <Label htmlFor="message">{t("contact.form.message")}</Label>
                 <Textarea
                   id="message"
-                  placeholder="Tell us how we can help you..."
+                  placeholder={t("contact.form.messagePlaceholder")}
                   className="min-h-[150px] bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 resize-none"
                 />
               </div>
 
               <Button className="w-full h-12 text-base font-semibold bg-[#D4AF37] hover:bg-[#C5A028] text-white">
-                Send Message
+                {t("contact.form.submit")}
               </Button>
             </form>
           </div>
@@ -107,11 +108,10 @@ const Contact = () => {
           <div className="space-y-12 lg:pl-12 pt-8">
             <div>
               <h2 className="text-3xl font-serif font-bold mb-6">
-                Get in Touch
+                {t("contact.info.title")}
               </h2>
               <p className="text-muted-foreground mb-8">
-                Visit our boutique or reach out through any of the channels
-                below.
+                {t("contact.info.subtitle")}
               </p>
 
               <div className="space-y-8">
@@ -121,14 +121,10 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg mb-1">
-                      Visit Our Boutique
+                      {t("contact.info.visit.title")}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      123 Luxury Avenue Madison
-                      <br />
-                      Square, New York, 10010 United
-                      <br />
-                      States
+                      {t("contact.info.visit.address")}
                     </p>
                   </div>
                 </div>
@@ -138,11 +134,11 @@ const Contact = () => {
                     <FaPhoneVolume className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg mb-1">Call Us</h3>
+                    <h3 className="font-bold text-lg mb-1">{t("contact.info.call.title")}</h3>
                     <p className="text-muted-foreground">
                       +1 (555) 123-4567
                       <br />
-                      Mon-Fri 9AM-8PM EST
+                      {t("contact.info.call.hours")}
                     </p>
                   </div>
                 </div>
@@ -152,11 +148,11 @@ const Contact = () => {
                     <CiMail className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg mb-1">Email Us</h3>
+                    <h3 className="font-bold text-lg mb-1">{t("contact.info.email.title")}</h3>
                     <p className="text-muted-foreground">
                       hi@aurene.com
                       <br />
-                      We'll respond within 24 hours
+                      {t("contact.info.email.note")}
                     </p>
                   </div>
                 </div>
@@ -164,7 +160,7 @@ const Contact = () => {
             </div>
 
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
-              <h3 className="font-bold text-lg mb-4">Follow Us</h3>
+              <h3 className="font-bold text-lg mb-4">{t("contact.info.follow")}</h3>
               <div className="flex gap-4">
                 <a
                   href="#"
@@ -194,10 +190,10 @@ const Contact = () => {
       <div className="pb-16 px-4 container mx-auto">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-serif font-bold mb-2">
-            Find Our Boutique
+            {t("contact.map.title")}
           </h2>
           <p className="text-muted-foreground">
-            Located in the heart of Madison Square, New York
+            {t("contact.map.subtitle")}
           </p>
         </div>
         <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-lg grayscale hover:grayscale-0 transition-all duration-500">
@@ -217,3 +213,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

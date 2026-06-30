@@ -1,33 +1,35 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const MainShop = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const categories = [
     {
       id: "watches",
-      title: "Watches",
+      title: t("shop.categories.watches.title"),
       image: "../../../assets/images/watchs/GoldWatch1.png",
-      description: "Explore our premium collection of timepieces",
+      description: t("shop.categories.watches.desc"),
     },
     {
       id: "bags",
-      title: "Bags",
+      title: t("shop.categories.bags.title"),
       image: "../../../assets/images/bags/bag1.png",
-      description: "Discover stylish and functional bags",
+      description: t("shop.categories.bags.desc"),
     },
     {
       id: "rings",
-      title: "Rings",
+      title: t("shop.categories.rings.title"),
       image: "../../../assets/images/rings/ring1.png",
-      description: "Elegant rings for every occasion",
+      description: t("shop.categories.rings.desc"),
     },
     {
       id: "bracelets",
-      title: "Bracelets",
+      title: t("shop.categories.bracelets.title"),
       image: "../../../assets/images/bracelets/brecelet1.png",
-      description: "Beautiful bracelets to accessorize your look",
+      description: t("shop.categories.bracelets.desc"),
     },
   ];
   useEffect(() => {
@@ -37,10 +39,10 @@ const MainShop = () => {
     <div className="dark:bg-gray-900 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-4 dark:text-white">
-          Our Collections
+          {t("shop.collections")}
         </h1>
         <p className="text-xl text-center text-gray-600 dark:text-gray-300 mb-12">
-          Select a category to start shopping
+          {t("shop.selectCategory")}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -76,3 +78,4 @@ const MainShop = () => {
 };
 
 export default MainShop;
+

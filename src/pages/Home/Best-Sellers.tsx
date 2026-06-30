@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
+
 const BestSellers = () => {
+  const { t } = useTranslation();
   return (
     <div className="w-full mt-4 px-0 md:px-8 lg:px-20 py-8">
-      <div className="text-center font-bold text-2xl md:text-4xl mb-8">
-        <h1>Best</h1>
-        <h1>Sellers</h1>
+      <div className="text-center font-bold text-2xl md:text-4xl mb-8 flex flex-col items-center">
+        <h1>{t("home.bestSellers.title1")}</h1>
+        <h1>{t("home.bestSellers.title2")}</h1>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap justify-center gap-4 md:gap-6 mt-8">
         <div className="w-full sm:w-1/2 lg:w-1/4 hover:shadow-xl hover:scale-105 transition-all duration-300">
@@ -40,3 +43,4 @@ const BestSellers = () => {
 };
 
 export default BestSellers;
+

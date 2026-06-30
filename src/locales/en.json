@@ -1,0 +1,368 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "cart": "Cart"
+  },
+  "common": {
+    "auréne": "Auréne",
+    "changeLang": "Change Language",
+    "subscribe": "Subscribe",
+    "exploreCollection": "Explore Collection",
+    "watches": "Watches",
+    "bags": "Bags",
+    "bracelets": "Bracelets",
+    "newArrivals": "New Arrivals",
+    "footer": {
+      "tagline": "Crafting luxury accessories that define elegance and sophistication.",
+      "shop": "Shop",
+      "support": "Support",
+      "contactUs": "Contact Us",
+      "sizeGuide": "Size Guide",
+      "returns": "Returns",
+      "shipping": "Shipping",
+      "newsletter": "Newsletter",
+      "newsletterSubtitle": "Subscribe for exclusive offers and updates",
+      "emailPlaceholder": "Enter your email",
+      "copyright": "© 2025 Auréne. All rights reserved."
+    }
+  },
+  "home": {
+    "hero": {
+      "loading": "Entering 3D Space",
+      "title": "Elevate Every",
+      "moment": "Moment",
+      "subtitle": "Immerse yourself in our curated collection of premium accessories, where craftsmanship meets futuristic design."
+    },
+    "hotOffers": {
+      "title": "🔥 Hot Offers",
+      "popular": "Popular",
+      "new": "New",
+      "diamondJewelry": "Diamond Jewelry",
+      "diamondJewelryDesc": "Sparkling beauty that captivates",
+      "designerRings": "Designer Rings",
+      "designerRingsDesc": "Perfect symbols of love and style",
+      "charmBracelets": "Charm Bracelets",
+      "charmBraceletsDesc": "Express your unique personality"
+    },
+    "bestSellers": {
+      "title1": "Best",
+      "title2": "Sellers"
+    },
+    "featuredCollections": {
+      "title1": "Featured",
+      "title2": "Collections"
+    },
+    "shopAccessories": {
+      "title": "Don't Miss Out!",
+      "subtitle": "Limited time offer ends soon. Use code ELEGANCE20 for 20% off your entire order!",
+      "shopAll": "Shop All Accessories",
+      "endsIn": "Ends in 2 Days"
+    },
+    "summerCollection": {
+      "title": "Summer Collection",
+      "off": "20% Off All Items",
+      "shop": "Shop Collection"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Where Elegance Meets",
+      "highlight": "Craftsmanship",
+      "subtitle": "Discover our story and passion for creating stunning accessories that inspire. Every piece tells a tale of dedication, artistry, and timeless beauty."
+    },
+    "visionary": {
+      "title": "Meet Our Visionary",
+      "subtitle": "Behind every exceptional piece lies the passion and expertise of our founder",
+      "name": "Rosita Fileb",
+      "role": "Visionary Designer & Founder",
+      "exp15": "15+ Years Exp",
+      "expert": "Luxury Expert",
+      "quote": "Passionate about blending tradition with innovation, I've dedicated my career to creating accessories that transcend trends and become timeless treasures.",
+      "description": "With over 15 years of experience shaping the world of luxury wear, our founder brings unparalleled expertise and artistic vision to every creation.",
+      "stats": {
+        "exp": "Years Experience",
+        "designs": "Designs Created",
+        "awards": "Awards Won"
+      }
+    },
+    "journey": {
+      "title": "Our Journey",
+      "subtitle": "Key milestones that define our commitment to quality and style",
+      "founded": {
+        "title": "Founded 2020",
+        "desc": "Our journey began with a vision to redefine accessory design and bring elegance to everyday life."
+      },
+      "firstCollection": {
+        "title": "First Collection 2021",
+        "desc": "Launched our debut line, celebrated for its unique craftsmanship and innovative design approach."
+      },
+      "globalReach": {
+        "title": "Global Reach 2023",
+        "desc": "Expanded to international markets, bringing elegance worldwide and touching lives across continents."
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why Choose Us",
+      "subtitle": "Experience luxury like never before with our carefully curated collection",
+      "quality": {
+        "title": "Premium Quality",
+        "desc": "Handcrafted with the finest materials and attention to detail"
+      },
+      "delivery": {
+        "title": "Fast Delivery",
+        "desc": "Quick and secure shipping to your doorstep worldwide"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Dedicated customer service for all your needs"
+      }
+    },
+    "cta": {
+      "title": "Ready to Discover More?",
+      "subtitle": "Dive deeper into our world of exquisite accessories. Sign up for exclusive offers and updates.",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds",
+      "shippingNote": "Secure checkout • Free shipping on orders over $100"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "We'd Love to Hear from You.",
+      "subtitle": "Whether you have a question about our jewelry, need styling advice, or want to share your feedback, we're here to help."
+    },
+    "form": {
+      "title": "Send us a Message",
+      "subtitle": "Fill out the form below and we'll get back to you within 24 hours.",
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "What is this regarding?",
+      "message": "Message",
+      "messagePlaceholder": "Tell us how we can help you...",
+      "submit": "Send Message"
+    },
+    "info": {
+      "title": "Get in Touch",
+      "subtitle": "Visit our boutique or reach out through any of the channels below.",
+      "visit": {
+        "title": "Visit Our Boutique",
+        "address": "123 Luxury Avenue Madison Square, New York, 10010 United States"
+      },
+      "call": {
+        "title": "Call Us",
+        "hours": "Mon-Fri 9AM-8PM EST"
+      },
+      "email": {
+        "title": "Email Us",
+        "note": "We'll respond within 24 hours"
+      },
+      "follow": "Follow Us"
+    },
+    "map": {
+      "title": "Find Our Boutique",
+      "subtitle": "Located in the heart of Madison Square, New York"
+    }
+  },
+  "login": {
+    "title": "Register Now And",
+    "subtitle": "Enjoy Shopping Smarter",
+    "tagline": "Share More, Save More! Get Discounts and Surprises When You Share.",
+    "pureGold": "PURE GOLD",
+    "greeting": "Hello, Creative Mind!",
+    "loginTab": "Login",
+    "createTab": "Create Account",
+    "or": "Or",
+    "google": "Google",
+    "facebook": "Facebook",
+    "form": {
+      "firstName": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot Password?",
+      "rememberMe": "Remember me",
+      "login": "Login",
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "location": "Location",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "getLocation": "Get My Location",
+      "createAccount": "Create Account"
+    }
+  },
+  "shop": {
+    "title": "Shop Our Collection",
+    "collections": "Our Collections",
+    "selectCategory": "Select a category to start shopping",
+    "filters": "Filters",
+    "sortBy": "Sort By",
+    "all": "All",
+    "featured": "Featured",
+    "newest": "Newest",
+    "priceLowHigh": "Price: Low to High",
+    "priceHighLow": "Price: High to Low",
+    "filtersList": {
+      "category": "Category",
+      "priceRange": "Price Range",
+      "color": "Color",
+      "material": "Material",
+      "gold": "Gold",
+      "silver": "Silver",
+      "leather": "Leather",
+      "productsFound": "products found"
+    },
+    "categories": {
+      "watches": {
+        "title": "Watches",
+        "desc": "Explore our premium collection of timepieces"
+      },
+      "bags": {
+        "title": "Bags",
+        "desc": "Discover stylish and functional bags"
+      },
+      "rings": {
+        "title": "Rings",
+        "desc": "Elegant rings for every occasion"
+      },
+      "bracelets": {
+        "title": "Bracelets",
+        "desc": "Beautiful bracelets to accessorize your look"
+      }
+    },
+    "products": {
+      "eleganceGoldWatch": "Elegance Gold Watch",
+      "modernSilverClassic": "Modern Silver Classic",
+      "heritageBlackGold": "Heritage Black Gold",
+      "midnightLegacyWatch": "Midnight Legacy Watch",
+      "vintageBronzeClassic": "Vintage Bronze Classic",
+      "ceramicPureGold": "Ceramic Pure Gold",
+      "classicLeatherTote": "Classic Leather Tote",
+      "crossbodyEssential": "Crossbody Essential",
+      "eveningClutch": "Evening Clutch",
+      "structuredSatchel": "Structured Satchel",
+      "chainMiniBag": "Chain Mini Bag",
+      "bucketBag": "Bucket Bag",
+      "diamondSolitaireRing": "Diamond Solitaire Ring",
+      "minimalistGoldBand": "Minimalist Gold Band",
+      "emeraldStatementRing": "Emerald Statement Ring",
+      "silverStackableSet": "Silver Stackable Set",
+      "goldenChainBracelet": "Golden Chain Bracelet",
+      "leatherBandBracelet": "Leather Band Bracelet",
+      "naturalStoneBeads": "Natural Stone Beads",
+      "silverCuffBracelet": "Silver Cuff Bracelet",
+      "delicateCharmBracelet": "Delicate Charm Bracelet",
+      "blackLeatherBand": "Black Leather Band",
+      "roseGoldDiamond": "Rose Gold Diamond",
+      "crystalTennisBracelet": "Crystal Tennis Bracelet"
+    },
+    "cartActions": {
+      "addToCart": "Add to Cart",
+      "inCart": "In Cart",
+      "added": "Added",
+      "alreadyInCart": "This item is already in your cart",
+      "successAdd": "Added to cart"
+    }
+  },
+  "product": {
+    "title": "Product",
+    "subtitle": "Product Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "cart": {
+    "title": "Cart",
+    "subtitle": "Cart Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "subtitle": "Checkout Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "subtitle": "Wishlist Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Profile Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "orders": {
+    "title": "Orders",
+    "subtitle": "Orders Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Settings Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "logout": {
+    "title": "Logout",
+    "subtitle": "Logout Description",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "quantity": "Quantity",
+    "description": "Description",
+    "reviews": "Reviews"
+  },
+  "notFound": {
+    "title": "404 - Page Not Found",
+    "subtitle": "Oops! The page you're looking for doesn't exist.",
+    "backHome": "Back to Home"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+    "emailPlaceholder": "Enter your email",
+    "cancel": "Cancel",
+    "sendLink": "Send Link",
+    "sending": "Sending...",
+    "success": "Reset link sent to your email!",
+    "error": "Failed to send reset link.",
+    "emailRequired": "Please enter your email."
+  }
+}

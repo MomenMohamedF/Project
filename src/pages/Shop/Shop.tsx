@@ -6,14 +6,16 @@ import { useEffect, useState } from "react";
 import Pagni from "@/components/common/pagni";
 import Card2 from "@/components/cards/card2";
 import ErrorBoundry from "@/components/common/ErrorBoundry";
+import { useTranslation } from "react-i18next";
 
 const Shop = () => {
+  const { t } = useTranslation();
   const { category } = useParams() as { category: string };
   const [sortBy, setSortBy] = useState("newest");
 
   const displayCategory = category
-    ? category.charAt(0).toUpperCase() + category.slice(1)
-    : "Products";
+    ? t(`shop.categories.${category}.title`)
+    : t("nav.shop");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,7 +37,7 @@ const Shop = () => {
           {/* Color Filter */}
           <div className="border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
             <h3 className="text-lg font-bold text-black mb-4 dark:text-white/56">
-              Color
+              {t("shop.filtersList.color")}
             </h3>
             <div className="flex gap-3">
               <div className="w-6 h-6 rounded-full bg-black cursor-pointer hover:ring-2 ring-gray-400"></div>
@@ -47,25 +49,25 @@ const Shop = () => {
           {/* Material Filter */}
           <div className="border border-gray-200 rounded-lg p-6 bg-white dark:bg-gray-800 dark:text-white/56">
             <h3 className="text-lg font-bold text-black mb-4 dark:text-white/56">
-              Material
+              {t("shop.filtersList.material")}
             </h3>
             <div className="flex flex-col gap-3">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded" />
                 <span className="text-sm text-gray-700 dark:text-white/56">
-                  Gold
+                  {t("shop.filtersList.gold")}
                 </span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded" />
                 <span className="text-sm text-gray-700 dark:text-white/56">
-                  Silver
+                  {t("shop.filtersList.silver")}
                 </span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded" />
                 <span className="text-sm text-gray-700 dark:text-white/56">
-                  Leather
+                  {t("shop.filtersList.leather")}
                 </span>
               </label>
             </div>
@@ -80,22 +82,22 @@ const Shop = () => {
                 {displayCategory}
               </h1>
               <p className="text-gray-600 dark:text-white/56">
-                {category.length} products found
+                {category?.length || 0} {t("shop.filtersList.productsFound")}
               </p>
             </div>
             <div className="flex items-center gap-2 dark:bg-gray-900/95">
               <label className="text-sm text-gray-700 dark:text-white/56">
-                Sort by
+                {t("shop.sortBy")}
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="border border-gray-300 rounded-lg px-3 dark:bg-gray-900/95 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
-                <option value="newest">Newest</option>
-                <option value="price-low"> Low to High</option>
-                <option value="price-high"> High to Low</option>
-                <option value="popular">Most Popular</option>
+                <option value="newest">{t("shop.newest")}</option>
+                <option value="price-low">{t("shop.priceLowHigh")}</option>
+                <option value="price-high">{t("shop.priceHighLow")}</option>
+                <option value="popular">{t("shop.featured")}</option>
               </select>
             </div>
           </div>
@@ -117,3 +119,4 @@ const Shop = () => {
 };
 
 export default Shop;
+

@@ -1,132 +1,127 @@
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "@/lib/utils/api";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import * as z from "zod";
+import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const loginSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address (e.g. user@example.com).",
-  }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters." })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-      {
-        message:
-          "Password must contain uppercase, lowercase, number, and special character.",
-      },
-    ),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+  rememberMe: z.boolean().default(false),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: (formData: LoginFormData) => {
-      return api.post("auth/sign-in", formData);
-    },
-    onSuccess: (data) => {
-      navigate("/");
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("user", JSON.stringify(data.data.user));
-      toast.success("Login successful!");
-    },
-    onError: (error: any) => {
-      let message = "An error occurred";
-      if (error.response?.status === 404) {
-        message = "Endpoint not found — check API URL";
-      } else if (error.response?.status === 400) {
-        message = error.response?.data?.message || "Invalid input";
-      } else if (error instanceof Error) {
-        message = error.message;
-      }
-      toast.error(message);
-    },
-  });
+  const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
+  } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
   });
 
-  const onSubmit: SubmitHandler<LoginFormData> = (formData) => {
-    mutate(formData);
+  const onSubmit = (data: LoginFormValues) => {
+    console.log(data);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Email Input */}
-        <div>
-          <input
-            type="email"
-            placeholder="Email or Username"
-            className="input"
-            {...register("email")}
-          />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 px-1 py-1">
+        {/* Email Field */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            {t("login.form.email")}
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <FiMail size={18} />
+            </div>
+            <input
+              {...register("email")}
+              type="email"
+              placeholder={t("login.form.emailPlaceholder")}
+              className={`w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.email ? "border-red-500" : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+            />
+          </div>
           {errors.email && (
-            <p className="text-lg text-red-500 font-bold mt-1">
-              {errors.email.message}
-            </p>
+            <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
           )}
         </div>
 
-        {/* PasswordInput */}
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            className="input"
-            {...register("password")}
-          />
+        {/* Password Field */}
+        <div className="space-y-1.5">
+          <div className="flex justify-between items-center">
+            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              {t("login.form.password")}
+            </label>
+            <button
+              type="button"
+              onClick={() => setIsForgotModalOpen(true)}
+              className="text-xs font-bold text-Yprimary hover:text-black dark:hover:text-white transition-colors"
+            >
+              {t("login.form.forgotPassword")}
+            </button>
+          </div>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <FiLock size={18} />
+            </div>
+            <input
+              {...register("password")}
+              type={showPassword ? "text" : "password"}
+              placeholder={t("login.form.passwordPlaceholder")}
+              className={`w-full pl-10 pr-12 py-3 bg-gray-50 dark:bg-gray-800 border ${
+                errors.password ? "border-red-500" : "border-gray-200 dark:border-gray-700"
+              } rounded-xl focus:ring-2 focus:ring-Yprimary focus:border-transparent outline-none transition-all dark:text-white`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+            </button>
+          </div>
           {errors.password && (
-            <p className="text-lg text-red-500 font-bold mt-1">
-              {errors.password.message}
-            </p>
+            <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
           )}
         </div>
 
-        {/* ForgotPassword */}
-        <div className="text-right">
-          <button
-            type="button"
-            onClick={() => setIsForgotPasswordOpen(true)}
-            className="text-sm text-gray-600 dark:text-gray-400 hover:text-Yprimary"
-          >
-            Forgot password?
-          </button>
+        {/* Remember Me */}
+        <div className="flex items-center">
+          <input
+            {...register("rememberMe")}
+            type="checkbox"
+            id="rememberMe"
+            className="w-4 h-4 text-Yprimary border-gray-300 rounded focus:ring-Yprimary accent-Yprimary"
+          />
+          <label htmlFor="rememberMe" className="ml-2 text-sm text-gray-600 dark:text-gray-400 font-medium">
+            {t("login.form.rememberMe")}
+          </label>
         </div>
 
-        {/* LoginButton */}
+        {/* Submit Button */}
         <button
           type="submit"
-          disabled={isPending}
-          className="w-full bg-Yprimary text-black font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-colors"
+          className="w-full bg-Yprimary text-black font-bold py-3.5 rounded-xl hover:bg-black hover:text-Yprimary transition-all duration-300 shadow-lg shadow-Yprimary/20 active:scale-[0.98]"
         >
-          {isPending ? "Logging in..." : "Login"}
+          {t("login.form.login")}
         </button>
       </form>
 
-      {/* Forgot Password Modal */}
-      {isForgotPasswordOpen && (
-        <ForgotPasswordModal onClose={() => setIsForgotPasswordOpen(false)} />
-      )}
+      <ForgotPasswordModal
+        isOpen={isForgotModalOpen}
+        onClose={() => setIsForgotModalOpen(false)}
+      />
     </>
   );
 };
