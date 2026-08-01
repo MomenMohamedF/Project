@@ -9,9 +9,10 @@ import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === "rtl";
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === "ar" ? "en" : "ar";
+    const newLang = i18n.language.startsWith("ar") ? "en" : "ar";
     i18n.changeLanguage(newLang);
   };
 
@@ -30,77 +31,90 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed border border-gray-200/10 text-shadow-lg/10 top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur shadow-sm dark:bg-gray-900/95 transition-all duration-300 ${isScrolled ? "w-[90vw] rounded-full ml-10 mt-2" : "w-full rounded-none m-0"}`}
+      className={`fixed top-0 z-50 border border-gray-200/10 bg-white/95 text-shadow-lg/10 shadow-sm backdrop-blur transition-all duration-300 dark:bg-gray-900/95 ${
+        isScrolled
+          ? "left-1/2 top-2 w-[min(92vw,72rem)] -translate-x-1/2 rounded-full"
+          : "inset-x-0 w-full rounded-none"
+      }`}
     >
-      {/* Cartoon Character walking animation
-      <div className="absolute top-8 left-0 right-0 bottom-0 pointer-events-none rounded-[inherit] overflow-hidden z-0">
-        <div className="walking-container" style={{ zIndex: 0 }}>
-          <span className="walking-character opacity-80">🦖</span>
-          
-        </div>
-      </div>
-      <div className="absolute top-8 left-0 right-0 bottom-0 pointer-events-none rounded-[inherit] overflow-hidden z-0">
-        <div className="walking-container" style={{ zIndex: 0 }}>
-          <span className="walking-character opacity-80">🦕</span>
-        </div>
-      </div> */}
+      <div className="relative z-10 mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-10">
+        <NavLink
+          to="/"
+          className="shrink-0 font-bold text-xl sm:text-2xl text-gray-900 dark:text-white"
+        >
+          {t("common.auréne")}
+        </NavLink>
 
-      <div className="max-w-5xl mx-auto flex items-center justify-between h-16 px-8 md:px-8 lg:px-20 relative z-10">
-        <h1 className="font-bold text-2xl mr-10">{t("common.auréne")}</h1>
-        <nav className="hidden  sm:flex items-center gap-4 mx-4 md:mx-8 lg:mx-20 text-gray-700 dark:text-white/90 font-medium">
+        <nav
+          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-4 font-medium text-gray-700 dark:text-white/90 sm:flex md:gap-6 lg:gap-8"
+          aria-label={isRtl ? "التنقل الرئيسي" : "Main navigation"}
+        >
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? "text-Yprimary" : "")}
+            className={({ isActive }) =>
+              isActive ? "text-Yprimary" : "hover:text-Yprimary/80 transition-colors"
+            }
           >
             {t("nav.home")}
           </NavLink>
           <NavLink
             to="/shop"
-            className={({ isActive }) => (isActive ? "text-Yprimary" : "")}
+            className={({ isActive }) =>
+              isActive ? "text-Yprimary" : "hover:text-Yprimary/80 transition-colors"
+            }
           >
             {t("nav.shop")}
           </NavLink>
           <NavLink
             to="/about"
-            className={({ isActive }) => (isActive ? "text-Yprimary" : "")}
+            className={({ isActive }) =>
+              isActive ? "text-Yprimary" : "hover:text-Yprimary/80 transition-colors"
+            }
           >
             {t("nav.about")}
           </NavLink>
           <NavLink
             to="/contact"
-            className={({ isActive }) => (isActive ? "text-Yprimary" : "")}
+            className={({ isActive }) =>
+              isActive ? "text-Yprimary" : "hover:text-Yprimary/80 transition-colors"
+            }
           >
             {t("nav.contact")}
           </NavLink>
         </nav>
-        <div className="flex items-center gap-4">
-          <FaRegHeart />
+
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3 md:gap-4 text-gray-800 dark:text-white">
+          <button
+            type="button"
+            className="rounded-md bg-Yprimary px-3 py-1.5 text-sm font-bold text-black sm:px-4 sm:py-2"
+            onClick={toggleLanguage}
+            aria-label={t("common.changeLang")}
+          >
+            {i18n.language.startsWith("ar") ? "EN" : "AR"}
+          </button>
+          <DarkMode />
           <NavLink
             to="/login"
             className={({ isActive }) => (isActive ? "text-DYprimary" : "")}
+            aria-label={t("nav.login")}
           >
-            <IoPersonOutline />
+            <IoPersonOutline className="text-xl sm:text-2xl" />
           </NavLink>
           <NavLink
             to="/cart"
             className={({ isActive }) => (isActive ? "text-DYprimary" : "")}
+            aria-label={t("nav.cart")}
           >
             <div className="relative">
-              <BiSolidShoppingBag />
+              <BiSolidShoppingBag className="text-xl sm:text-2xl" />
               {totalCount > 0 && (
-                <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 -end-3 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                   {totalCount}
                 </span>
               )}
             </div>
           </NavLink>
-          <DarkMode />
-            <button
-              className="bg-Yprimary text-black px-4 py-2 rounded-md font-bold"
-              onClick={toggleLanguage}
-            >
-              {i18n.language === "ar" ? "EN" : "AR"}
-            </button>
+          <FaRegHeart className="text-xl sm:text-2xl" aria-hidden />
         </div>
       </div>
     </header>
